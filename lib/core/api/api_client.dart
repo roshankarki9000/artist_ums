@@ -79,6 +79,31 @@ class ApiClient {
 
     return response;
   }
+
+  Stream<List<T>> stream<T>({
+    required String table,
+    required T Function(Map<String, dynamic>) fromJson,
+    List<String> primaryKey = const ['id'],
+    Map<String, dynamic>? query,
+    String? orderBy,
+    bool ascending = false,
+  }) {
+    "STREAM → table:$table | query:$query".logApi(type: "ApiClient");
+
+    final builder = _client.from(table).stream(primaryKey: primaryKey);
+
+    if (query != null) {
+      query.forEach((key, value) {
+        builder.eq(key, value);
+      });
+    }
+
+    if (orderBy != null) {
+      builder.order(orderBy, ascending: ascending);
+    }
+
+    return builder.map((data) => data.map((e) => fromJson(e)).toList());
+  }
 }
 
 enum RequestType { get, post, patch, delete, rpc }

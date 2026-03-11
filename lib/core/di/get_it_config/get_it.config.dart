@@ -29,12 +29,30 @@ import 'package:artist_ums/core/service/email_service.dart' as _i1027;
 import 'package:artist_ums/core/utils/connectivity_service.dart' as _i392;
 import 'package:artist_ums/core/utils/repository_guard.dart' as _i566;
 import 'package:artist_ums/core/utils/retry_manager.dart' as _i388;
+import 'package:artist_ums/features/activity_logs/data/repository/activity_log_repo_impl.dart'
+    as _i600;
+import 'package:artist_ums/features/activity_logs/domain/repository/activity_log_repository.dart'
+    as _i346;
+import 'package:artist_ums/features/activity_logs/presentation/bloc/activity_log_bloc.dart'
+    as _i309;
+import 'package:artist_ums/features/artists/data/repository/artist_repo_impl.dart'
+    as _i50;
+import 'package:artist_ums/features/artists/domain/repository/artist_repository.dart'
+    as _i150;
+import 'package:artist_ums/features/artists/presentation/bloc/artist_bloc.dart'
+    as _i153;
 import 'package:artist_ums/features/auth/data/repository/auth_repo_impl.dart'
     as _i813;
 import 'package:artist_ums/features/auth/domain/repository/auth_repository.dart'
     as _i977;
 import 'package:artist_ums/features/auth/presentation/bloc/auth_bloc.dart'
     as _i681;
+import 'package:artist_ums/features/songs/data/repository/songs_repo_impl.dart'
+    as _i875;
+import 'package:artist_ums/features/songs/domain/repository/songs_repository.dart'
+    as _i259;
+import 'package:artist_ums/features/songs/presentation/bloc/songs_bloc.dart'
+    as _i378;
 import 'package:artist_ums/features/users/data/repository/user_repo_impl.dart'
     as _i141;
 import 'package:artist_ums/features/users/domain/repository/user_repository.dart'
@@ -88,6 +106,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i178.ConnectivityRepository>(
       () => _i379.ConnectivityRepositoryImpl(gh<_i356.ConnectionMonitor>()),
     );
+    gh.lazySingleton<_i346.ActivityLogRepository>(
+      () => _i600.ActivityLogRepositoryImpl(gh<_i75.ApiClient>()),
+    );
     gh.lazySingleton<_i566.RepositoryGuard>(
       () => registerModule.repositoryGuard(
         gh<_i392.ConnectivityService>(),
@@ -96,6 +117,12 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i882.ConnectivityBloc>(
       () => _i882.ConnectivityBloc(gh<_i178.ConnectivityRepository>()),
+    );
+    gh.lazySingleton<_i150.ArtistRepository>(
+      () => _i50.ArtistRepositoryImpl(
+        gh<_i75.ApiClient>(),
+        gh<_i566.RepositoryGuard>(),
+      ),
     );
     gh.lazySingleton<_i1027.EmailService>(
       () => registerModule.emailService(gh<_i566.RepositoryGuard>()),
@@ -107,6 +134,18 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i779.AuthClient>(),
       ),
     );
+    gh.factory<_i309.ActivityLogBloc>(
+      () => _i309.ActivityLogBloc(gh<_i346.ActivityLogRepository>()),
+    );
+    gh.factory<_i153.ArtistBloc>(
+      () => _i153.ArtistBloc(gh<_i150.ArtistRepository>()),
+    );
+    gh.lazySingleton<_i259.SongRepository>(
+      () => _i875.SongRepositoryImpl(
+        gh<_i75.ApiClient>(),
+        gh<_i566.RepositoryGuard>(),
+      ),
+    );
     gh.lazySingleton<_i977.AuthRepository>(
       () => _i813.AuthRepositoryImpl(
         gh<_i779.AuthClient>(),
@@ -116,6 +155,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i690.UserBloc>(
       () => _i690.UserBloc(gh<_i231.UserRepository>()),
+    );
+    gh.factory<_i378.SongBloc>(
+      () => _i378.SongBloc(gh<_i259.SongRepository>()),
     );
     gh.factory<_i681.AuthBloc>(
       () => _i681.AuthBloc(
