@@ -1,3 +1,4 @@
+import 'package:artist_ums/core/service/email_service.dart';
 import 'package:artist_ums/features/users/domain/repository/user_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
@@ -8,8 +9,9 @@ import 'user_state.dart';
 @injectable
 class UserBloc extends Bloc<UserEvent, UserState> {
   final UserRepository repo;
+  final EmailService _emailService;
 
-  UserBloc(this.repo) : super(const UserState.initial()) {
+  UserBloc(this.repo, this._emailService) : super(const UserState.initial()) {
     on<UserEvent>((event, emit) async {
       await event.when(
         getUsers: () => _getUsers(emit),
@@ -53,10 +55,16 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
     final result = await repo.createUser(name: name, email: email);
 
-    result.fold((failure) => emit(UserState.error(failure: failure)), (_) {
-      emit(const UserState.success());
-      add(const UserEvent.getUsers());
-    });
+    await result.fold(
+      (failure) async => emit(UserState.error(failure: failure)),
+      (_) async {
+        var emailResult = await _emailService.sendUserCreatedEmail(email);
+        await emailResult.fold((_) => null, (_) {
+          emit(const UserState.success());
+          add(const UserEvent.getUsers());
+        });
+      },
+    );
   }
 
   Future<void> _updateUser(
@@ -79,12 +87,24 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     required String id,
   }) async {
     emit(const UserState.loading());
-
+    final user = await repo.getUser(id: id);
+    String? email = user.fold((_) => null, (user) => user.email);
     final result = await repo.deleteUser(id);
 
-    result.fold((failure) => emit(UserState.error(failure: failure)), (_) {
-      emit(const UserState.success());
-      add(const UserEvent.getUsers());
-    });
+    await result.fold(
+      (failure) async => emit(UserState.error(failure: failure)),
+      (_) async {
+        if (email != null) {
+          var emailResult = await _emailService.sendUserDeactivatedEmail(email);
+          await emailResult.fold((_) => null, (_) {
+            emit(const UserState.success());
+            add(const UserEvent.getUsers());
+          });
+        } else {
+          emit(const UserState.success());
+          add(const UserEvent.getUsers());
+        }
+      },
+    );
   }
 }

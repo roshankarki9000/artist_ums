@@ -1,4 +1,5 @@
 import 'package:artist_ums/core/error/failure/failure.dart';
+import 'package:artist_ums/features/users/domain/entities/user_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'auth_state.freezed.dart';
@@ -11,7 +12,7 @@ abstract class AuthState with _$AuthState {
 
   const factory AuthState.unauthenticated() = _Unauthenticated;
 
-  const factory AuthState.authenticated() = _Authenticated;
+  const factory AuthState.authenticated(UserModel user) = _Authenticated;
 
   const factory AuthState.resetRequired() = _ResetRequired;
 

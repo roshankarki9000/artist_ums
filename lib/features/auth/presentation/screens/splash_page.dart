@@ -1,5 +1,4 @@
 import 'package:artist_ums/core/constants/image_constants.dart';
-import 'package:artist_ums/core/constants/style_constants.dart';
 import 'package:artist_ums/core/presentation/widgets/generic_image.dart';
 import 'package:artist_ums/core/presentation/widgets/glow.dart';
 import 'package:artist_ums/features/auth/presentation/bloc/auth_bloc.dart';
@@ -49,9 +48,10 @@ class _SplashPageState extends State<SplashPage>
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
           state.whenOrNull(
-            authenticated: () => context.go('/dashboard'),
+            authenticated: (user) => context.go('/dashboard'),
             unauthenticated: () => context.go('/login'),
             error: (failure) => context.go('/login'),
+            resetRequired: () => context.go('/login'),
           );
         },
         child: Center(
@@ -71,15 +71,6 @@ class _SplashPageState extends State<SplashPage>
                 ),
               ),
               CupertinoActivityIndicator(),
-              Center(
-                child: FadeTransition(
-                  opacity: _controller,
-                  child: Text(
-                    'Artist Management System',
-                    style: StylesConstants.textDark24w600,
-                  ),
-                ),
-              ),
             ],
           ),
         ),

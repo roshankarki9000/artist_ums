@@ -1,3 +1,4 @@
+import 'package:artist_ums/core/service/email_service.dart';
 import 'package:artist_ums/features/auth/domain/repository/auth_repository.dart';
 import 'package:artist_ums/features/users/domain/repository/user_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,7 +11,9 @@ import 'auth_state.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AuthRepository repo;
   final UserRepository userRepo;
-  AuthBloc(this.repo, this.userRepo) : super(const AuthState.initial()) {
+  final EmailService emailService;
+  AuthBloc(this.repo, this.userRepo, this.emailService)
+    : super(const AuthState.initial()) {
     on<AuthEvent>((event, emit) async {
       await event.when(
         started: () => _started(emit),
@@ -43,15 +46,20 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
         final resetCheck = await userRepo.needsPasswordReset();
 
-        resetCheck.fold((failure) => emit(AuthState.error(failure: failure)), (
-          needsReset,
-        ) {
-          if (needsReset) {
-            emit(const AuthState.resetRequired());
-          } else {
-            emit(const AuthState.authenticated());
-          }
-        });
+        await resetCheck.fold(
+          (failure) async => emit(AuthState.error(failure: failure)),
+          (needsReset) async {
+            if (needsReset) {
+              emit(const AuthState.resetRequired());
+            } else {
+              final result = await userRepo.getCurrentUser();
+              result.fold(
+                (failure) => emit(AuthState.error(failure: failure)),
+                (user) => emit(AuthState.authenticated(user)),
+              );
+            }
+          },
+        );
       },
     );
   }
@@ -70,15 +78,20 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       (_) async {
         final reset = await userRepo.needsPasswordReset();
 
-        reset.fold((failure) => emit(AuthState.error(failure: failure)), (
-          needsReset,
-        ) {
-          if (needsReset) {
-            emit(const AuthState.resetRequired());
-          } else {
-            emit(const AuthState.authenticated());
-          }
-        });
+        await reset.fold(
+          (failure) async => emit(AuthState.error(failure: failure)),
+          (needsReset) async {
+            if (needsReset) {
+              emit(const AuthState.resetRequired());
+            } else {
+              final result = await userRepo.getCurrentUser();
+              result.fold(
+                (failure) => emit(AuthState.error(failure: failure)),
+                (user) => emit(AuthState.authenticated(user)),
+              );
+            }
+          },
+        );
       },
     );
   }
@@ -97,21 +110,29 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       password: password,
     );
 
-    result.fold(
-      (failure) => emit(AuthState.error(failure: failure)),
-      (_) => emit(const AuthState.unauthenticated()),
+    await result.fold(
+      (failure) async {
+        emit(AuthState.error(failure: failure));
+      },
+      (_) async {
+        final emailResult = await emailService.sendUserRegistrationEmail(email);
+
+        emailResult.fold(
+          (failure) {
+            emit(AuthState.error(failure: failure));
+          },
+          (_) {
+            emit(const AuthState.unauthenticated());
+          },
+        );
+      },
     );
   }
 
   Future<void> _googleLogin(Emitter<AuthState> emit) async {
     emit(const AuthState.loading());
-
     final result = await repo.loginWithGoogle();
-
-    result.fold(
-      (failure) => emit(AuthState.error(failure: failure)),
-      (_) => emit(const AuthState.authenticated()),
-    );
+    result.fold((failure) => emit(AuthState.error(failure: failure)), (_) {});
   }
 
   Future<void> _logout(Emitter<AuthState> emit) async {

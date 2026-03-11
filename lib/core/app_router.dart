@@ -28,7 +28,7 @@ class AppRouter {
         final location = state.matchedLocation;
 
         return authState.maybeWhen(
-          authenticated: () {
+          authenticated: (user) {
             return '/dashboard';
           },
 
@@ -64,16 +64,13 @@ class AppRouter {
         ),
 
         /// AUTH
-        GoRoute(path: '/login', builder: (context, state) => const LoginPage()),
+        GoRoute(path: '/login', builder: (context, state) => LoginPage()),
 
-        GoRoute(
-          path: '/register',
-          builder: (context, state) => const RegisterPage(),
-        ),
+        GoRoute(path: '/register', builder: (context, state) => RegisterPage()),
 
         GoRoute(
           path: '/reset-password',
-          builder: (context, state) => const ResetPasswordPage(),
+          builder: (context, state) => ResetPasswordPage(),
         ),
 
         /// DASHBOARD

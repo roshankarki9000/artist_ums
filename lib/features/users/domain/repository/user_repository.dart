@@ -7,6 +7,8 @@ abstract class UserRepository {
 
   Future<EitherOr<Failure, UserModel>> getCurrentUser();
 
+  Future<EitherOr<Failure, UserModel>> getUser({required String id});
+
   Future<EitherOr<Failure, void>> createUser({
     required String name,
     required String email,

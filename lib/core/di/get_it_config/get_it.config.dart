@@ -134,6 +134,10 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i779.AuthClient>(),
       ),
     );
+    gh.factory<_i690.UserBloc>(
+      () =>
+          _i690.UserBloc(gh<_i231.UserRepository>(), gh<_i1027.EmailService>()),
+    );
     gh.factory<_i309.ActivityLogBloc>(
       () => _i309.ActivityLogBloc(gh<_i346.ActivityLogRepository>()),
     );
@@ -153,17 +157,15 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i231.UserRepository>(),
       ),
     );
-    gh.factory<_i690.UserBloc>(
-      () => _i690.UserBloc(gh<_i231.UserRepository>()),
-    );
-    gh.factory<_i378.SongBloc>(
-      () => _i378.SongBloc(gh<_i259.SongRepository>()),
-    );
     gh.factory<_i681.AuthBloc>(
       () => _i681.AuthBloc(
         gh<_i977.AuthRepository>(),
         gh<_i231.UserRepository>(),
+        gh<_i1027.EmailService>(),
       ),
+    );
+    gh.factory<_i378.SongBloc>(
+      () => _i378.SongBloc(gh<_i259.SongRepository>()),
     );
     return this;
   }

@@ -29,6 +29,21 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
+  Future<EitherOr<Failure, UserModel>> getUser({required String id}) {
+    return guard.run(() async {
+      final response = await apiClient.request(
+        table: 'users',
+        type: RequestType.get,
+        query: {'id': id},
+      );
+      return (response as List)
+          .map((e) => UserModel.fromJson(e))
+          .toList()
+          .first;
+    });
+  }
+
+  @override
   Future<EitherOr<Failure, UserModel>> getCurrentUser() {
     return guard.run(() async {
       final userId = authClient.currentUser!.id;

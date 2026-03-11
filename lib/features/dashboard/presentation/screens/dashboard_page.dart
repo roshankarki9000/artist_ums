@@ -1,12 +1,21 @@
-import 'package:artist_ums/core/di/get_it_config/get_it.dart';
-import 'package:artist_ums/core/service/email_service.dart';
+import 'package:artist_ums/core/presentation/widgets/generic_scaffold.dart';
+import 'package:artist_ums/features/activity_logs/presentation/bloc/activity_log_bloc.dart';
+import 'package:artist_ums/features/activity_logs/presentation/bloc/activity_log_event.dart';
+import 'package:artist_ums/features/artists/presentation/bloc/artist_bloc.dart';
+import 'package:artist_ums/features/artists/presentation/bloc/artist_event.dart';
 import 'package:artist_ums/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:artist_ums/features/auth/presentation/bloc/auth_event.dart';
 import 'package:artist_ums/features/auth/presentation/bloc/auth_state.dart';
+import 'package:artist_ums/features/dashboard/presentation/widgets/activities_log.dart';
+import 'package:artist_ums/features/dashboard/presentation/widgets/custom_activity.dart';
+import 'package:artist_ums/features/dashboard/presentation/widgets/custom_calender.dart';
+import 'package:artist_ums/features/dashboard/presentation/widgets/dashboard_appbar.dart';
+import 'package:artist_ums/features/songs/presentation/bloc/songs_bloc.dart';
+import 'package:artist_ums/features/songs/presentation/bloc/songs_event.dart';
 import 'package:artist_ums/features/users/presentation/bloc/user_bloc.dart';
 import 'package:artist_ums/features/users/presentation/bloc/user_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 class DashboardPage extends StatefulWidget {
@@ -18,43 +27,44 @@ class DashboardPage extends StatefulWidget {
 
 class _DashboardPageState extends State<DashboardPage> {
   @override
+  void didChangeDependencies() {
+    context.read<UserBloc>().add(UserEvent.getUsers());
+    context.read<ArtistBloc>().add(ArtistEvent.loadArtists());
+    context.read<SongBloc>().add(SongEvent.loadSongs());
+    context.read<ActivityLogBloc>().add(ActivityLogEvent.started());
+
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) => state.maybeWhen(
         orElse: () => null,
-        unauthenticated: () => context.go('/login'),
+        unauthenticated: () => context.go('/splash'),
       ),
-      child: Scaffold(
-        body: Column(
-          spacing: 10,
-          children: [
-            ElevatedButton(
-              onPressed: () {
-                context.read<AuthBloc>().add(AuthEvent.logout());
-              },
-              child: Text('Logout'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                context.read<UserBloc>().add(
-                  UserEvent.createUser(
-                    name: 'Roshan676',
-                    email: 'roshankarki676@gmail.com',
-                  ),
-                );
-              },
-              child: Text('Create User'),
-            ),
-
-            ElevatedButton(
-              onPressed: () {
-                getIt<EmailService>().sendUserCreatedEmail(
-                  'roshankarki9000@gmail.com',
-                );
-              },
-              child: Text('Send Email'),
-            ),
-          ],
+      child: GenericScaffold(
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              DashboardAppBar(),
+              SizedBox(height: 20.h),
+              CustomCalendar(),
+              Activity(),
+              SizedBox(height: 30.h),
+              ElevatedButton(
+                onPressed: () {
+                  context.read<UserBloc>().add(
+                    UserEvent.deleteUser(
+                      id: 'ef2ee7a1-9074-48d6-8dbb-a441aebbfe55',
+                    ),
+                  );
+                },
+                child: Text('Add User'),
+              ),
+              ActivitiesLog(),
+            ],
+          ),
         ),
       ),
     );
