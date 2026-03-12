@@ -1,3 +1,4 @@
+import 'package:artist_ums/core/constants/color_constants.dart';
 import 'package:artist_ums/core/constants/image_constants.dart';
 import 'package:artist_ums/core/constants/style_constants.dart';
 import 'package:artist_ums/core/presentation/widgets/generic_image.dart';
@@ -14,8 +15,10 @@ import 'package:artist_ums/features/songs/presentation/bloc/songs_state.dart';
 import 'package:artist_ums/features/users/presentation/bloc/user_bloc.dart';
 import 'package:artist_ums/features/users/presentation/bloc/user_state.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 class Activity extends StatelessWidget {
   final EdgeInsets contentPadding;
@@ -43,7 +46,8 @@ class Activity extends StatelessWidget {
                   return state.maybeWhen(
                     usersLoaded: (user) => _Activities(
                       title: 'Users',
-                      color: Color(0xFF0C0412),
+                      onTap: () => context.push('/users'),
+                      color: ColorConstant.textDarkPurple,
                       iconPath: ImageConstants.userLogoGif,
                       value: user.length.twoDigits,
                       subtitle: 'Total Users',
@@ -58,8 +62,9 @@ class Activity extends StatelessWidget {
                 builder: (context, state) {
                   return state.maybeWhen(
                     loaded: (user) => _Activities(
+                      onTap: () => context.push('/artists'),
                       title: 'Artists',
-                      color: Color(0xFFEDCA7C),
+                      color: ColorConstant.textDarkYellow,
                       iconPath: ImageConstants.artistsLogoGif,
                       value: user.length.twoDigits,
                       subtitle: 'Artists Created',
@@ -74,7 +79,9 @@ class Activity extends StatelessWidget {
                   return state.maybeWhen(
                     loaded: (user) => _Activities(
                       title: 'Songs',
-                      color: Color(0xFF3F51B5),
+                      onTap: () => context.push('/songs'),
+
+                      color: ColorConstant.textDarkPrimary,
                       iconPath: ImageConstants.musicLogoGif,
                       value: user.length.twoDigits,
                       subtitle: 'Music Recorded',
@@ -89,7 +96,7 @@ class Activity extends StatelessWidget {
                   return state.maybeWhen(
                     authenticated: (user) => _Activities(
                       title: 'Total Days',
-                      color: Color(0xFFC6D337),
+                      color: ColorConstant.textDarkNeon,
                       iconPath: ImageConstants.workingDaysLogoGif,
                       value: user.createdAt.getWorkingDaysTillNow.twoDigits,
                       subtitle: 'Working Days',
@@ -113,51 +120,65 @@ class _Activities extends StatelessWidget {
   final String iconPath;
   final String value;
   final String subtitle;
+  final void Function()? onTap;
+
   const _Activities({
     required this.title,
     required this.color,
     required this.iconPath,
     required this.value,
     required this.subtitle,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return Glow(
-      child: Container(
-        height: 145.h,
-        width: double.infinity,
-        padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 15.h),
-        decoration: BoxDecoration(
-          color: color,
-          borderRadius: BorderRadius.circular(18.r),
-        ),
-        child: Column(
-          spacing: 8.h,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              spacing: 10.w,
-              children: [
-                Glow(
-                  opacity: 1,
-                  blurStrength: 35,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10.r),
-                    child: GenericImage.asset(
-                      iconPath,
-                      height: 35.r,
-                      width: 35.r,
-                    ),
+      child: Material(
+        color: Colors.transparent,
+        child: Ink(
+          decoration: BoxDecoration(
+            color: color,
+            borderRadius: BorderRadius.circular(18.r),
+          ),
+          child: InkWell(
+            borderRadius: BorderRadius.circular(18.r),
+            splashColor: ColorConstant.primaryColor.withAlpha(100),
+            highlightColor: ColorConstant.primaryColor.withAlpha(50),
+            onTap: onTap,
+            child: Container(
+              height: 145.h,
+              width: double.infinity,
+              padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 15.h),
+              child: Column(
+                spacing: 8.h,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    spacing: 10.w,
+                    children: [
+                      Glow(
+                        opacity: 1,
+                        blurStrength: 35,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10.r),
+                          child: GenericImage.asset(
+                            iconPath,
+                            height: 35.r,
+                            width: 35.r,
+                          ),
+                        ),
+                      ),
+                      Text(title, style: StylesConstants.white14w400),
+                    ],
                   ),
-                ),
-                Text(title, style: StylesConstants.white14w400),
-              ],
+                  Text(value, style: StylesConstants.white24w600),
+                  Text(subtitle, style: StylesConstants.white16w600),
+                ],
+              ),
             ),
-            Text(value, style: StylesConstants.white24w600),
-            Text(subtitle, style: StylesConstants.white16w600),
-          ],
+          ),
         ),
       ),
     );

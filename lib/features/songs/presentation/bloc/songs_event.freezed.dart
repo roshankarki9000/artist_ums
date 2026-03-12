@@ -55,11 +55,12 @@ extension SongEventPatterns on SongEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _LoadSongs value)?  loadSongs,TResult Function( _CreateSong value)?  createSong,TResult Function( _UpdateSong value)?  updateSong,TResult Function( _DeleteSong value)?  deleteSong,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _LoadSongs value)?  loadSongs,TResult Function( _FilterSongByArtist value)?  filterSongByArtist,TResult Function( _CreateSong value)?  createSong,TResult Function( _UpdateSong value)?  updateSong,TResult Function( _DeleteSong value)?  deleteSong,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _LoadSongs() when loadSongs != null:
-return loadSongs(_that);case _CreateSong() when createSong != null:
+return loadSongs(_that);case _FilterSongByArtist() when filterSongByArtist != null:
+return filterSongByArtist(_that);case _CreateSong() when createSong != null:
 return createSong(_that);case _UpdateSong() when updateSong != null:
 return updateSong(_that);case _DeleteSong() when deleteSong != null:
 return deleteSong(_that);case _:
@@ -80,11 +81,12 @@ return deleteSong(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _LoadSongs value)  loadSongs,required TResult Function( _CreateSong value)  createSong,required TResult Function( _UpdateSong value)  updateSong,required TResult Function( _DeleteSong value)  deleteSong,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _LoadSongs value)  loadSongs,required TResult Function( _FilterSongByArtist value)  filterSongByArtist,required TResult Function( _CreateSong value)  createSong,required TResult Function( _UpdateSong value)  updateSong,required TResult Function( _DeleteSong value)  deleteSong,}){
 final _that = this;
 switch (_that) {
 case _LoadSongs():
-return loadSongs(_that);case _CreateSong():
+return loadSongs(_that);case _FilterSongByArtist():
+return filterSongByArtist(_that);case _CreateSong():
 return createSong(_that);case _UpdateSong():
 return updateSong(_that);case _DeleteSong():
 return deleteSong(_that);case _:
@@ -104,11 +106,12 @@ return deleteSong(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _LoadSongs value)?  loadSongs,TResult? Function( _CreateSong value)?  createSong,TResult? Function( _UpdateSong value)?  updateSong,TResult? Function( _DeleteSong value)?  deleteSong,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _LoadSongs value)?  loadSongs,TResult? Function( _FilterSongByArtist value)?  filterSongByArtist,TResult? Function( _CreateSong value)?  createSong,TResult? Function( _UpdateSong value)?  updateSong,TResult? Function( _DeleteSong value)?  deleteSong,}){
 final _that = this;
 switch (_that) {
 case _LoadSongs() when loadSongs != null:
-return loadSongs(_that);case _CreateSong() when createSong != null:
+return loadSongs(_that);case _FilterSongByArtist() when filterSongByArtist != null:
+return filterSongByArtist(_that);case _CreateSong() when createSong != null:
 return createSong(_that);case _UpdateSong() when updateSong != null:
 return updateSong(_that);case _DeleteSong() when deleteSong != null:
 return deleteSong(_that);case _:
@@ -128,10 +131,11 @@ return deleteSong(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  loadSongs,TResult Function( String artistId,  String title,  String? album,  String? coverUrl)?  createSong,TResult Function( String id,  String artistId,  String title,  String? album,  String? coverUrl)?  updateSong,TResult Function( String id)?  deleteSong,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  loadSongs,TResult Function( String id)?  filterSongByArtist,TResult Function( String artistId,  String title,  String? album,  File? coverUrl)?  createSong,TResult Function( String id,  String artistId,  String title,  String? album,  File? coverUrl)?  updateSong,TResult Function( String id)?  deleteSong,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _LoadSongs() when loadSongs != null:
-return loadSongs();case _CreateSong() when createSong != null:
+return loadSongs();case _FilterSongByArtist() when filterSongByArtist != null:
+return filterSongByArtist(_that.id);case _CreateSong() when createSong != null:
 return createSong(_that.artistId,_that.title,_that.album,_that.coverUrl);case _UpdateSong() when updateSong != null:
 return updateSong(_that.id,_that.artistId,_that.title,_that.album,_that.coverUrl);case _DeleteSong() when deleteSong != null:
 return deleteSong(_that.id);case _:
@@ -152,10 +156,11 @@ return deleteSong(_that.id);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  loadSongs,required TResult Function( String artistId,  String title,  String? album,  String? coverUrl)  createSong,required TResult Function( String id,  String artistId,  String title,  String? album,  String? coverUrl)  updateSong,required TResult Function( String id)  deleteSong,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  loadSongs,required TResult Function( String id)  filterSongByArtist,required TResult Function( String artistId,  String title,  String? album,  File? coverUrl)  createSong,required TResult Function( String id,  String artistId,  String title,  String? album,  File? coverUrl)  updateSong,required TResult Function( String id)  deleteSong,}) {final _that = this;
 switch (_that) {
 case _LoadSongs():
-return loadSongs();case _CreateSong():
+return loadSongs();case _FilterSongByArtist():
+return filterSongByArtist(_that.id);case _CreateSong():
 return createSong(_that.artistId,_that.title,_that.album,_that.coverUrl);case _UpdateSong():
 return updateSong(_that.id,_that.artistId,_that.title,_that.album,_that.coverUrl);case _DeleteSong():
 return deleteSong(_that.id);case _:
@@ -175,10 +180,11 @@ return deleteSong(_that.id);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  loadSongs,TResult? Function( String artistId,  String title,  String? album,  String? coverUrl)?  createSong,TResult? Function( String id,  String artistId,  String title,  String? album,  String? coverUrl)?  updateSong,TResult? Function( String id)?  deleteSong,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  loadSongs,TResult? Function( String id)?  filterSongByArtist,TResult? Function( String artistId,  String title,  String? album,  File? coverUrl)?  createSong,TResult? Function( String id,  String artistId,  String title,  String? album,  File? coverUrl)?  updateSong,TResult? Function( String id)?  deleteSong,}) {final _that = this;
 switch (_that) {
 case _LoadSongs() when loadSongs != null:
-return loadSongs();case _CreateSong() when createSong != null:
+return loadSongs();case _FilterSongByArtist() when filterSongByArtist != null:
+return filterSongByArtist(_that.id);case _CreateSong() when createSong != null:
 return createSong(_that.artistId,_that.title,_that.album,_that.coverUrl);case _UpdateSong() when updateSong != null:
 return updateSong(_that.id,_that.artistId,_that.title,_that.album,_that.coverUrl);case _DeleteSong() when deleteSong != null:
 return deleteSong(_that.id);case _:
@@ -224,6 +230,72 @@ String toString() {
 /// @nodoc
 
 
+class _FilterSongByArtist implements SongEvent {
+  const _FilterSongByArtist({required this.id});
+  
+
+ final  String id;
+
+/// Create a copy of SongEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$FilterSongByArtistCopyWith<_FilterSongByArtist> get copyWith => __$FilterSongByArtistCopyWithImpl<_FilterSongByArtist>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FilterSongByArtist&&(identical(other.id, id) || other.id == id));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,id);
+
+@override
+String toString() {
+  return 'SongEvent.filterSongByArtist(id: $id)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$FilterSongByArtistCopyWith<$Res> implements $SongEventCopyWith<$Res> {
+  factory _$FilterSongByArtistCopyWith(_FilterSongByArtist value, $Res Function(_FilterSongByArtist) _then) = __$FilterSongByArtistCopyWithImpl;
+@useResult
+$Res call({
+ String id
+});
+
+
+
+
+}
+/// @nodoc
+class __$FilterSongByArtistCopyWithImpl<$Res>
+    implements _$FilterSongByArtistCopyWith<$Res> {
+  __$FilterSongByArtistCopyWithImpl(this._self, this._then);
+
+  final _FilterSongByArtist _self;
+  final $Res Function(_FilterSongByArtist) _then;
+
+/// Create a copy of SongEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? id = null,}) {
+  return _then(_FilterSongByArtist(
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
 class _CreateSong implements SongEvent {
   const _CreateSong({required this.artistId, required this.title, this.album, this.coverUrl});
   
@@ -231,7 +303,7 @@ class _CreateSong implements SongEvent {
  final  String artistId;
  final  String title;
  final  String? album;
- final  String? coverUrl;
+ final  File? coverUrl;
 
 /// Create a copy of SongEvent
 /// with the given fields replaced by the non-null parameter values.
@@ -263,7 +335,7 @@ abstract mixin class _$CreateSongCopyWith<$Res> implements $SongEventCopyWith<$R
   factory _$CreateSongCopyWith(_CreateSong value, $Res Function(_CreateSong) _then) = __$CreateSongCopyWithImpl;
 @useResult
 $Res call({
- String artistId, String title, String? album, String? coverUrl
+ String artistId, String title, String? album, File? coverUrl
 });
 
 
@@ -286,7 +358,7 @@ artistId: null == artistId ? _self.artistId : artistId // ignore: cast_nullable_
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,album: freezed == album ? _self.album : album // ignore: cast_nullable_to_non_nullable
 as String?,coverUrl: freezed == coverUrl ? _self.coverUrl : coverUrl // ignore: cast_nullable_to_non_nullable
-as String?,
+as File?,
   ));
 }
 
@@ -304,7 +376,7 @@ class _UpdateSong implements SongEvent {
  final  String artistId;
  final  String title;
  final  String? album;
- final  String? coverUrl;
+ final  File? coverUrl;
 
 /// Create a copy of SongEvent
 /// with the given fields replaced by the non-null parameter values.
@@ -336,7 +408,7 @@ abstract mixin class _$UpdateSongCopyWith<$Res> implements $SongEventCopyWith<$R
   factory _$UpdateSongCopyWith(_UpdateSong value, $Res Function(_UpdateSong) _then) = __$UpdateSongCopyWithImpl;
 @useResult
 $Res call({
- String id, String artistId, String title, String? album, String? coverUrl
+ String id, String artistId, String title, String? album, File? coverUrl
 });
 
 
@@ -360,7 +432,7 @@ as String,artistId: null == artistId ? _self.artistId : artistId // ignore: cast
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,album: freezed == album ? _self.album : album // ignore: cast_nullable_to_non_nullable
 as String?,coverUrl: freezed == coverUrl ? _self.coverUrl : coverUrl // ignore: cast_nullable_to_non_nullable
-as String?,
+as File?,
   ));
 }
 

@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ArtistModel {
 
- String get id; String get name; String? get bio; String? get createdBy; DateTime? get createdAt;
+ String get id; String get name; String? get bio; String? get createdBy; DateTime? get createdAt;@JsonKey(name: "cover_url") String? get coverUrl;
 /// Create a copy of ArtistModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $ArtistModelCopyWith<ArtistModel> get copyWith => _$ArtistModelCopyWithImpl<Arti
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ArtistModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.bio, bio) || other.bio == bio)&&(identical(other.createdBy, createdBy) || other.createdBy == createdBy)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ArtistModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.bio, bio) || other.bio == bio)&&(identical(other.createdBy, createdBy) || other.createdBy == createdBy)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.coverUrl, coverUrl) || other.coverUrl == coverUrl));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,bio,createdBy,createdAt);
+int get hashCode => Object.hash(runtimeType,id,name,bio,createdBy,createdAt,coverUrl);
 
 @override
 String toString() {
-  return 'ArtistModel(id: $id, name: $name, bio: $bio, createdBy: $createdBy, createdAt: $createdAt)';
+  return 'ArtistModel(id: $id, name: $name, bio: $bio, createdBy: $createdBy, createdAt: $createdAt, coverUrl: $coverUrl)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $ArtistModelCopyWith<$Res>  {
   factory $ArtistModelCopyWith(ArtistModel value, $Res Function(ArtistModel) _then) = _$ArtistModelCopyWithImpl;
 @useResult
 $Res call({
- String id, String name, String? bio, String? createdBy, DateTime? createdAt
+ String id, String name, String? bio, String? createdBy, DateTime? createdAt,@JsonKey(name: "cover_url") String? coverUrl
 });
 
 
@@ -65,14 +65,15 @@ class _$ArtistModelCopyWithImpl<$Res>
 
 /// Create a copy of ArtistModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? bio = freezed,Object? createdBy = freezed,Object? createdAt = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? bio = freezed,Object? createdBy = freezed,Object? createdAt = freezed,Object? coverUrl = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,bio: freezed == bio ? _self.bio : bio // ignore: cast_nullable_to_non_nullable
 as String?,createdBy: freezed == createdBy ? _self.createdBy : createdBy // ignore: cast_nullable_to_non_nullable
 as String?,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
-as DateTime?,
+as DateTime?,coverUrl: freezed == coverUrl ? _self.coverUrl : coverUrl // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
@@ -157,10 +158,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String? bio,  String? createdBy,  DateTime? createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String? bio,  String? createdBy,  DateTime? createdAt, @JsonKey(name: "cover_url")  String? coverUrl)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ArtistModel() when $default != null:
-return $default(_that.id,_that.name,_that.bio,_that.createdBy,_that.createdAt);case _:
+return $default(_that.id,_that.name,_that.bio,_that.createdBy,_that.createdAt,_that.coverUrl);case _:
   return orElse();
 
 }
@@ -178,10 +179,10 @@ return $default(_that.id,_that.name,_that.bio,_that.createdBy,_that.createdAt);c
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String? bio,  String? createdBy,  DateTime? createdAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String? bio,  String? createdBy,  DateTime? createdAt, @JsonKey(name: "cover_url")  String? coverUrl)  $default,) {final _that = this;
 switch (_that) {
 case _ArtistModel():
-return $default(_that.id,_that.name,_that.bio,_that.createdBy,_that.createdAt);case _:
+return $default(_that.id,_that.name,_that.bio,_that.createdBy,_that.createdAt,_that.coverUrl);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -198,10 +199,10 @@ return $default(_that.id,_that.name,_that.bio,_that.createdBy,_that.createdAt);c
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String? bio,  String? createdBy,  DateTime? createdAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String? bio,  String? createdBy,  DateTime? createdAt, @JsonKey(name: "cover_url")  String? coverUrl)?  $default,) {final _that = this;
 switch (_that) {
 case _ArtistModel() when $default != null:
-return $default(_that.id,_that.name,_that.bio,_that.createdBy,_that.createdAt);case _:
+return $default(_that.id,_that.name,_that.bio,_that.createdBy,_that.createdAt,_that.coverUrl);case _:
   return null;
 
 }
@@ -213,7 +214,7 @@ return $default(_that.id,_that.name,_that.bio,_that.createdBy,_that.createdAt);c
 @JsonSerializable()
 
 class _ArtistModel implements ArtistModel {
-  const _ArtistModel({required this.id, required this.name, this.bio, this.createdBy, this.createdAt});
+  const _ArtistModel({required this.id, required this.name, this.bio, this.createdBy, this.createdAt, @JsonKey(name: "cover_url") this.coverUrl});
   factory _ArtistModel.fromJson(Map<String, dynamic> json) => _$ArtistModelFromJson(json);
 
 @override final  String id;
@@ -221,6 +222,7 @@ class _ArtistModel implements ArtistModel {
 @override final  String? bio;
 @override final  String? createdBy;
 @override final  DateTime? createdAt;
+@override@JsonKey(name: "cover_url") final  String? coverUrl;
 
 /// Create a copy of ArtistModel
 /// with the given fields replaced by the non-null parameter values.
@@ -235,16 +237,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ArtistModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.bio, bio) || other.bio == bio)&&(identical(other.createdBy, createdBy) || other.createdBy == createdBy)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ArtistModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.bio, bio) || other.bio == bio)&&(identical(other.createdBy, createdBy) || other.createdBy == createdBy)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.coverUrl, coverUrl) || other.coverUrl == coverUrl));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,bio,createdBy,createdAt);
+int get hashCode => Object.hash(runtimeType,id,name,bio,createdBy,createdAt,coverUrl);
 
 @override
 String toString() {
-  return 'ArtistModel(id: $id, name: $name, bio: $bio, createdBy: $createdBy, createdAt: $createdAt)';
+  return 'ArtistModel(id: $id, name: $name, bio: $bio, createdBy: $createdBy, createdAt: $createdAt, coverUrl: $coverUrl)';
 }
 
 
@@ -255,7 +257,7 @@ abstract mixin class _$ArtistModelCopyWith<$Res> implements $ArtistModelCopyWith
   factory _$ArtistModelCopyWith(_ArtistModel value, $Res Function(_ArtistModel) _then) = __$ArtistModelCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String name, String? bio, String? createdBy, DateTime? createdAt
+ String id, String name, String? bio, String? createdBy, DateTime? createdAt,@JsonKey(name: "cover_url") String? coverUrl
 });
 
 
@@ -272,14 +274,15 @@ class __$ArtistModelCopyWithImpl<$Res>
 
 /// Create a copy of ArtistModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? bio = freezed,Object? createdBy = freezed,Object? createdAt = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? bio = freezed,Object? createdBy = freezed,Object? createdAt = freezed,Object? coverUrl = freezed,}) {
   return _then(_ArtistModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,bio: freezed == bio ? _self.bio : bio // ignore: cast_nullable_to_non_nullable
 as String?,createdBy: freezed == createdBy ? _self.createdBy : createdBy // ignore: cast_nullable_to_non_nullable
 as String?,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
-as DateTime?,
+as DateTime?,coverUrl: freezed == coverUrl ? _self.coverUrl : coverUrl // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 

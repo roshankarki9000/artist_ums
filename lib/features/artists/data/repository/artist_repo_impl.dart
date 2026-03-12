@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:artist_ums/core/api/api_client.dart';
 import 'package:artist_ums/core/error/failure/failure.dart';
 import 'package:artist_ums/core/utils/either_or.dart';
@@ -24,49 +26,55 @@ class ArtistRepositoryImpl implements ArtistRepository {
   }
 
   @override
-  Future<EitherOr<Failure, ArtistModel>> createArtist({
+  Future<EitherOr<Failure, void>> createArtist({
     required String name,
     String? bio,
+    String? coverUrl,
   }) {
     return _guard.run(() async {
-      final res = await _apiClient.request(
+      await _apiClient.request(
         table: "artists",
-        body: {"name": name, "bio": bio},
+        body: {"name": name, "bio": bio, "cover_url": coverUrl},
         type: RequestType.post,
       );
-
-      return ArtistModel.fromJson(res);
     });
   }
 
   @override
-  Future<EitherOr<Failure, ArtistModel>> updateArtist({
+  Future<EitherOr<Failure, void>> updateArtist({
     required String id,
     required String name,
     String? bio,
   }) {
     return _guard.run(() async {
-      final res = await _apiClient.request(
+      await _apiClient.request(
         table: "artists",
         query: {'id': id},
         body: {"name": name, "bio": bio},
         type: RequestType.patch,
       );
-
-      return ArtistModel.fromJson(res);
     });
   }
 
   @override
-  Future<EitherOr<Failure, bool>> deleteArtist(String id) {
+  Future<EitherOr<Failure, void>> deleteArtist(String id) {
     return _guard.run(() async {
       await _apiClient.request(
         table: "artists",
         type: RequestType.delete,
         query: {'id': id},
       );
+    });
+  }
 
-      return true;
+  @override
+  Future<EitherOr<Failure, String>> uploadArtistCover({required File file}) {
+    return _guard.run(() async {
+      return await _apiClient.uploadImageAndGetUrl(
+        bucket: "artist-covers",
+        file: file,
+        folder: "covers",
+      );
     });
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:artist_ums/core/api/api_client.dart';
 import 'package:artist_ums/core/error/failure/failure.dart';
 import 'package:artist_ums/core/utils/either_or.dart';
@@ -26,14 +28,27 @@ class SongRepositoryImpl implements SongRepository {
   }
 
   @override
-  Future<EitherOr<Failure, SongModel>> createSong({
+  Future<EitherOr<Failure, List<SongModel>>> getSongsByArtist(String artistId) {
+    return _guard.run(() async {
+      final response = await _apiClient.request(
+        table: "songs",
+        type: RequestType.get,
+        query: {"artist_id": artistId},
+      );
+
+      return (response as List).map((e) => SongModel.fromJson(e)).toList();
+    });
+  }
+
+  @override
+  Future<EitherOr<Failure, void>> createSong({
     required String artistId,
     required String title,
     String? album,
     String? coverUrl,
   }) {
     return _guard.run(() async {
-      final res = await _apiClient.request(
+      await _apiClient.request(
         table: "songs",
         body: {
           "artist_id": artistId,
@@ -43,13 +58,11 @@ class SongRepositoryImpl implements SongRepository {
         },
         type: RequestType.post,
       );
-
-      return SongModel.fromJson(res);
     });
   }
 
   @override
-  Future<EitherOr<Failure, SongModel>> updateSong({
+  Future<EitherOr<Failure, void>> updateSong({
     required String id,
     required String artistId,
     required String title,
@@ -57,7 +70,7 @@ class SongRepositoryImpl implements SongRepository {
     String? coverUrl,
   }) {
     return _guard.run(() async {
-      final res = await _apiClient.request(
+      await _apiClient.request(
         table: "songs",
         query: {"id": id},
         body: {
@@ -68,21 +81,28 @@ class SongRepositoryImpl implements SongRepository {
         },
         type: RequestType.patch,
       );
-
-      return SongModel.fromJson(res);
     });
   }
 
   @override
-  Future<EitherOr<Failure, bool>> deleteSong(String id) {
+  Future<EitherOr<Failure, void>> deleteSong(String id) {
     return _guard.run(() async {
       await _apiClient.request(
         table: "songs",
         type: RequestType.delete,
         query: {"id": id},
       );
+    });
+  }
 
-      return true;
+  @override
+  Future<EitherOr<Failure, String>> uploadSongCover({required File file}) {
+    return _guard.run(() async {
+      return await _apiClient.uploadImageAndGetUrl(
+        bucket: "song-covers",
+        file: file,
+        folder: "covers",
+      );
     });
   }
 }

@@ -1,11 +1,11 @@
 import 'package:artist_ums/core/constants/image_constants.dart';
 import 'package:artist_ums/core/presentation/widgets/generic_image.dart';
+import 'package:artist_ums/core/presentation/widgets/generic_scaffold.dart';
 import 'package:artist_ums/core/presentation/widgets/glow.dart';
 import 'package:artist_ums/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:artist_ums/features/auth/presentation/bloc/auth_event.dart';
 import 'package:artist_ums/features/auth/presentation/bloc/auth_state.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
@@ -44,7 +44,7 @@ class _SplashPageState extends State<SplashPage>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return GenericScaffold(
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
           state.whenOrNull(

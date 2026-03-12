@@ -1,4 +1,6 @@
 import 'package:artist_ums/core/constants/color_constants.dart';
+import 'package:artist_ums/core/constants/image_constants.dart';
+import 'package:artist_ums/core/presentation/widgets/generic_scaffold.dart';
 import 'package:artist_ums/core/presentation/widgets/generic_text_field.dart';
 import 'package:artist_ums/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:artist_ums/features/auth/presentation/bloc/auth_event.dart';
@@ -26,7 +28,7 @@ class ResetPasswordPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return GenericScaffold(
       backgroundColor: ColorConstant.backgroundColor,
       appBar: AppBar(title: const Text("Reset Password"), centerTitle: true),
       body: BlocListener<AuthBloc, AuthState>(
@@ -73,7 +75,7 @@ class ResetPasswordPage extends StatelessWidget {
                     GenericTextField(
                       controller: _passwordController,
                       hint: "Enter New Password",
-                      icon: Icons.lock_outline,
+                      icon: ImageConstants.passwordLogoLottie,
                       isPassword: true,
                       validator: (v) {
                         if (v == null || v.isEmpty) {
@@ -92,7 +94,7 @@ class ResetPasswordPage extends StatelessWidget {
                     GenericTextField(
                       controller: _confirmController,
                       hint: "Confirm New Password",
-                      icon: Icons.lock_outline,
+                      icon: ImageConstants.passwordLogoLottie,
                       isPassword: true,
                       validator: (v) {
                         if (v != _passwordController.text) {

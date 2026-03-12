@@ -3,6 +3,7 @@ import 'package:artist_ums/core/presentation/widgets/glow.dart';
 import 'package:artist_ums/core/utils/extensions/date_time_extension.dart';
 import 'package:artist_ums/core/utils/extensions/string_extension.dart';
 import 'package:artist_ums/features/activity_logs/presentation/bloc/activity_log_bloc.dart';
+import 'package:artist_ums/features/activity_logs/presentation/bloc/activity_log_event.dart';
 import 'package:artist_ums/features/activity_logs/presentation/bloc/activity_log_state.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,12 @@ class ActivitiesLog extends StatefulWidget {
 }
 
 class _ActivitiesLogState extends State<ActivitiesLog> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<ActivityLogBloc>().add(const ActivityLogEvent.started());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(

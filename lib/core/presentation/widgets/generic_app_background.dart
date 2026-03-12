@@ -11,30 +11,33 @@ class AppBackground extends StatelessWidget {
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(30),
-      child: Container(
-        color: Colors.white,
-        child: Stack(
-          children: [
-            Positioned(
-              left: -120,
-              top: -120,
+      child: Stack(
+        children: [
+          GenericSafeArea(child: child),
+          Positioned(
+            left: -120,
+            top: -120,
+            child: IgnorePointer(
+              ignoring: true,
               child: _BlurBlob(
                 size: 240,
                 color: const Color(0xFF4527A0).withAlpha(80),
               ),
             ),
+          ),
 
-            Positioned(
-              right: -140,
-              bottom: -120,
+          Positioned(
+            right: -140,
+            bottom: -120,
+            child: IgnorePointer(
+              ignoring: true,
               child: _BlurBlob(
                 size: 240,
                 color: const Color(0xFF4527A0).withAlpha(80),
               ),
             ),
-            GenericSafeArea(child: child),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

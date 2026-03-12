@@ -128,12 +128,12 @@ return deleteArtist(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  loadArtists,TResult Function( String name,  String? bio)?  createArtist,TResult Function( String id,  String name,  String? bio)?  updateArtist,TResult Function( String id)?  deleteArtist,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  loadArtists,TResult Function( String name,  String? bio,  File? coverUrl)?  createArtist,TResult Function( String id,  String name,  String? bio,  File? coverUrl)?  updateArtist,TResult Function( String id)?  deleteArtist,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _LoadArtists() when loadArtists != null:
 return loadArtists();case _CreateArtist() when createArtist != null:
-return createArtist(_that.name,_that.bio);case _UpdateArtist() when updateArtist != null:
-return updateArtist(_that.id,_that.name,_that.bio);case _DeleteArtist() when deleteArtist != null:
+return createArtist(_that.name,_that.bio,_that.coverUrl);case _UpdateArtist() when updateArtist != null:
+return updateArtist(_that.id,_that.name,_that.bio,_that.coverUrl);case _DeleteArtist() when deleteArtist != null:
 return deleteArtist(_that.id);case _:
   return orElse();
 
@@ -152,12 +152,12 @@ return deleteArtist(_that.id);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  loadArtists,required TResult Function( String name,  String? bio)  createArtist,required TResult Function( String id,  String name,  String? bio)  updateArtist,required TResult Function( String id)  deleteArtist,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  loadArtists,required TResult Function( String name,  String? bio,  File? coverUrl)  createArtist,required TResult Function( String id,  String name,  String? bio,  File? coverUrl)  updateArtist,required TResult Function( String id)  deleteArtist,}) {final _that = this;
 switch (_that) {
 case _LoadArtists():
 return loadArtists();case _CreateArtist():
-return createArtist(_that.name,_that.bio);case _UpdateArtist():
-return updateArtist(_that.id,_that.name,_that.bio);case _DeleteArtist():
+return createArtist(_that.name,_that.bio,_that.coverUrl);case _UpdateArtist():
+return updateArtist(_that.id,_that.name,_that.bio,_that.coverUrl);case _DeleteArtist():
 return deleteArtist(_that.id);case _:
   throw StateError('Unexpected subclass');
 
@@ -175,12 +175,12 @@ return deleteArtist(_that.id);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  loadArtists,TResult? Function( String name,  String? bio)?  createArtist,TResult? Function( String id,  String name,  String? bio)?  updateArtist,TResult? Function( String id)?  deleteArtist,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  loadArtists,TResult? Function( String name,  String? bio,  File? coverUrl)?  createArtist,TResult? Function( String id,  String name,  String? bio,  File? coverUrl)?  updateArtist,TResult? Function( String id)?  deleteArtist,}) {final _that = this;
 switch (_that) {
 case _LoadArtists() when loadArtists != null:
 return loadArtists();case _CreateArtist() when createArtist != null:
-return createArtist(_that.name,_that.bio);case _UpdateArtist() when updateArtist != null:
-return updateArtist(_that.id,_that.name,_that.bio);case _DeleteArtist() when deleteArtist != null:
+return createArtist(_that.name,_that.bio,_that.coverUrl);case _UpdateArtist() when updateArtist != null:
+return updateArtist(_that.id,_that.name,_that.bio,_that.coverUrl);case _DeleteArtist() when deleteArtist != null:
 return deleteArtist(_that.id);case _:
   return null;
 
@@ -225,11 +225,12 @@ String toString() {
 
 
 class _CreateArtist implements ArtistEvent {
-  const _CreateArtist({required this.name, this.bio});
+  const _CreateArtist({required this.name, this.bio, this.coverUrl});
   
 
  final  String name;
  final  String? bio;
+ final  File? coverUrl;
 
 /// Create a copy of ArtistEvent
 /// with the given fields replaced by the non-null parameter values.
@@ -241,16 +242,16 @@ _$CreateArtistCopyWith<_CreateArtist> get copyWith => __$CreateArtistCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CreateArtist&&(identical(other.name, name) || other.name == name)&&(identical(other.bio, bio) || other.bio == bio));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CreateArtist&&(identical(other.name, name) || other.name == name)&&(identical(other.bio, bio) || other.bio == bio)&&(identical(other.coverUrl, coverUrl) || other.coverUrl == coverUrl));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,name,bio);
+int get hashCode => Object.hash(runtimeType,name,bio,coverUrl);
 
 @override
 String toString() {
-  return 'ArtistEvent.createArtist(name: $name, bio: $bio)';
+  return 'ArtistEvent.createArtist(name: $name, bio: $bio, coverUrl: $coverUrl)';
 }
 
 
@@ -261,7 +262,7 @@ abstract mixin class _$CreateArtistCopyWith<$Res> implements $ArtistEventCopyWit
   factory _$CreateArtistCopyWith(_CreateArtist value, $Res Function(_CreateArtist) _then) = __$CreateArtistCopyWithImpl;
 @useResult
 $Res call({
- String name, String? bio
+ String name, String? bio, File? coverUrl
 });
 
 
@@ -278,11 +279,12 @@ class __$CreateArtistCopyWithImpl<$Res>
 
 /// Create a copy of ArtistEvent
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? name = null,Object? bio = freezed,}) {
+@pragma('vm:prefer-inline') $Res call({Object? name = null,Object? bio = freezed,Object? coverUrl = freezed,}) {
   return _then(_CreateArtist(
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,bio: freezed == bio ? _self.bio : bio // ignore: cast_nullable_to_non_nullable
-as String?,
+as String?,coverUrl: freezed == coverUrl ? _self.coverUrl : coverUrl // ignore: cast_nullable_to_non_nullable
+as File?,
   ));
 }
 
@@ -293,12 +295,13 @@ as String?,
 
 
 class _UpdateArtist implements ArtistEvent {
-  const _UpdateArtist({required this.id, required this.name, this.bio});
+  const _UpdateArtist({required this.id, required this.name, this.bio, this.coverUrl});
   
 
  final  String id;
  final  String name;
  final  String? bio;
+ final  File? coverUrl;
 
 /// Create a copy of ArtistEvent
 /// with the given fields replaced by the non-null parameter values.
@@ -310,16 +313,16 @@ _$UpdateArtistCopyWith<_UpdateArtist> get copyWith => __$UpdateArtistCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UpdateArtist&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.bio, bio) || other.bio == bio));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UpdateArtist&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.bio, bio) || other.bio == bio)&&(identical(other.coverUrl, coverUrl) || other.coverUrl == coverUrl));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,name,bio);
+int get hashCode => Object.hash(runtimeType,id,name,bio,coverUrl);
 
 @override
 String toString() {
-  return 'ArtistEvent.updateArtist(id: $id, name: $name, bio: $bio)';
+  return 'ArtistEvent.updateArtist(id: $id, name: $name, bio: $bio, coverUrl: $coverUrl)';
 }
 
 
@@ -330,7 +333,7 @@ abstract mixin class _$UpdateArtistCopyWith<$Res> implements $ArtistEventCopyWit
   factory _$UpdateArtistCopyWith(_UpdateArtist value, $Res Function(_UpdateArtist) _then) = __$UpdateArtistCopyWithImpl;
 @useResult
 $Res call({
- String id, String name, String? bio
+ String id, String name, String? bio, File? coverUrl
 });
 
 
@@ -347,12 +350,13 @@ class __$UpdateArtistCopyWithImpl<$Res>
 
 /// Create a copy of ArtistEvent
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? bio = freezed,}) {
+@pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? bio = freezed,Object? coverUrl = freezed,}) {
   return _then(_UpdateArtist(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,bio: freezed == bio ? _self.bio : bio // ignore: cast_nullable_to_non_nullable
-as String?,
+as String?,coverUrl: freezed == coverUrl ? _self.coverUrl : coverUrl // ignore: cast_nullable_to_non_nullable
+as File?,
   ));
 }
 

@@ -29,11 +29,18 @@ class AppRouter {
 
         return authState.maybeWhen(
           authenticated: (user) {
-            return '/dashboard';
+            if (location == '/login' ||
+                location == '/register' ||
+                location == '/splash') {
+              return '/dashboard';
+            }
+            return null;
           },
 
           unauthenticated: () {
             if (location == '/login' || location == '/register') {
+              return null;
+            } else if (location == '/') {
               return null;
             }
             return '/login';
@@ -134,7 +141,7 @@ class AppRouter {
             GoRoute(
               path: 'create-song',
               builder: (context, state) =>
-                  CreateSongPage(id: state.pathParameters['id']!),
+                  CreateSongPage(id: state.pathParameters['id']),
             ),
             GoRoute(
               path: 'edit-song/:id',

@@ -9,7 +9,7 @@ class ColorConstant {
 
   static Color get primarySplash => const Color(0x22065CA9);
 
-  static Color get backgroundColor => const Color(0xFFf5f5f5);
+  static Color get backgroundColor => Colors.white;
 
   static Color get backgroundColor1 => const Color(0xFFf5f5f5);
 
@@ -28,12 +28,17 @@ class ColorConstant {
   static Color get buttonFocused => const Color(0xFF054A87);
 
   static Color get activeGreen => const Color(0xFF008F1D);
+  static Color get activeLightGreen => const Color.fromARGB(255, 214, 255, 222);
 
   static Color get buttonSoftColor => Color(0xFFFAFAFA);
 
   static Color get hintGrey => const Color(0xFF808B9A);
 
   static Color get textDark => const Color(0xFF141414);
+  static Color get textDarkPurple => (Color.fromARGB(255, 119, 49, 173));
+  static Color get textDarkYellow => (Color(0xFFEDCA7C));
+  static Color get textDarkPrimary => (Color(0xFF3F51B5));
+  static Color get textDarkNeon => (Color(0xFFC6D337));
 
   static Color get subtitleGreyColor => const Color(0xff637381);
 
@@ -42,6 +47,7 @@ class ColorConstant {
   static Color get textLightColor => const Color(0xFF4A5568);
 
   static Color get disabledBackground => const Color(0xFFF5F5F5);
+  static Color get disabledBackground1 => Colors.grey.shade300;
 
   static Color get textNormal => const Color(0xFF5C5C5C);
 
@@ -84,4 +90,7 @@ class ColorConstant {
   static Color get lightPinkColor => Color(0xFFFFEBEB);
 
   static Color get splashColor => const Color(0xff065CA9);
+
+  static Color get primaryShade1 => Color(0xFF6F9BFF);
+  static Color get primaryShade2 => Color(0xFFAFC7FF);
 }

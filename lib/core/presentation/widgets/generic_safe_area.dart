@@ -41,14 +41,15 @@ class GenericSafeArea extends StatelessWidget {
       ),
       child: Stack(
         children: [
-          Container(
-            width: double.infinity,
-            height: double.infinity,
-            decoration: BoxDecoration(
-              color: backgroundColor ?? Colors.transparent,
+          Positioned.fill(top: 0, child: child),
+          IgnorePointer(
+            ignoring: true,
+            child: Container(
+              width: double.infinity,
+              height: double.infinity,
+              decoration: BoxDecoration(color: Colors.transparent),
             ),
           ),
-          Positioned.fill(top: 0, child: child),
         ],
       ),
     );

@@ -14,6 +14,7 @@ _ArtistModel _$ArtistModelFromJson(Map<String, dynamic> json) => _ArtistModel(
   createdAt: json['createdAt'] == null
       ? null
       : DateTime.parse(json['createdAt'] as String),
+  coverUrl: json['cover_url'] as String?,
 );
 
 Map<String, dynamic> _$ArtistModelToJson(_ArtistModel instance) =>
@@ -23,4 +24,5 @@ Map<String, dynamic> _$ArtistModelToJson(_ArtistModel instance) =>
       'bio': instance.bio,
       'createdBy': instance.createdBy,
       'createdAt': instance.createdAt?.toIso8601String(),
+      'cover_url': instance.coverUrl,
     };

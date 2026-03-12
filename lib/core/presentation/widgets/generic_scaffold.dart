@@ -17,13 +17,10 @@ class GenericScaffold extends Scaffold {
          body: Builder(
            builder: (context) {
              return ColoredBox(
-               color: appbarColor ?? Theme.of(context).scaffoldBackgroundColor,
+               color: Colors.transparent,
                child: Stack(
                  children: [
                    Positioned.fill(
-                     top: appBar == null
-                         ? MediaQuery.of(context).padding.top
-                         : 0,
                      child: Column(
                        children: [
                          appBar ?? const SizedBox(),

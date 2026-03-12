@@ -11,6 +11,7 @@ abstract class ArtistModel with _$ArtistModel {
     String? bio,
     String? createdBy,
     DateTime? createdAt,
+    @JsonKey(name: "cover_url") String? coverUrl,
   }) = _ArtistModel;
 
   factory ArtistModel.fromJson(Map<String, dynamic> json) =>

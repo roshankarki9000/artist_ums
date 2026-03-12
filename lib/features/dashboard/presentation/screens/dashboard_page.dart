@@ -1,6 +1,4 @@
 import 'package:artist_ums/core/presentation/widgets/generic_scaffold.dart';
-import 'package:artist_ums/features/activity_logs/presentation/bloc/activity_log_bloc.dart';
-import 'package:artist_ums/features/activity_logs/presentation/bloc/activity_log_event.dart';
 import 'package:artist_ums/features/artists/presentation/bloc/artist_bloc.dart';
 import 'package:artist_ums/features/artists/presentation/bloc/artist_event.dart';
 import 'package:artist_ums/features/auth/presentation/bloc/auth_bloc.dart';
@@ -31,7 +29,6 @@ class _DashboardPageState extends State<DashboardPage> {
     context.read<UserBloc>().add(UserEvent.getUsers());
     context.read<ArtistBloc>().add(ArtistEvent.loadArtists());
     context.read<SongBloc>().add(SongEvent.loadSongs());
-    context.read<ActivityLogBloc>().add(ActivityLogEvent.started());
 
     super.didChangeDependencies();
   }
@@ -52,16 +49,6 @@ class _DashboardPageState extends State<DashboardPage> {
               CustomCalendar(),
               Activity(),
               SizedBox(height: 30.h),
-              ElevatedButton(
-                onPressed: () {
-                  context.read<UserBloc>().add(
-                    UserEvent.deleteUser(
-                      id: 'ef2ee7a1-9074-48d6-8dbb-a441aebbfe55',
-                    ),
-                  );
-                },
-                child: Text('Add User'),
-              ),
               ActivitiesLog(),
             ],
           ),

@@ -24,47 +24,51 @@ class DashboardAppBar extends StatelessWidget {
         return state.maybeWhen(
           authenticated: (user) {
             return Padding(
-              padding: contentPadding,
-              child: Row(
-                children: [
-                  Glow(
-                    child: Container(
-                      height: 60.r,
-                      width: 60.r,
-                      decoration: BoxDecoration(shape: BoxShape.circle),
-                      child: Transform.scale(
-                        scale: 1.5,
-                        child: Center(
-                          child: GenericImage.lottieAsset(
-                            ImageConstants.avatarLogoLottie,
+              padding: EdgeInsets.only(top: kToolbarHeight),
+              child: Padding(
+                padding: contentPadding,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Glow(
+                      child: Container(
+                        height: 60.r,
+                        width: 60.r,
+                        decoration: BoxDecoration(shape: BoxShape.circle),
+                        child: Transform.scale(
+                          scale: 1.5,
+                          child: Center(
+                            child: GenericImage.lottieAsset(
+                              ImageConstants.avatarLogoLottie,
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  Text.rich(
-                    TextSpan(
-                      children: [
-                        TextSpan(
-                          text: user.name,
-                          style: StylesConstants.textDark20w500,
-                        ),
-                        TextSpan(text: '\n'),
-                        TextSpan(
-                          text: user.role,
-                          style: StylesConstants.textDark16w400,
-                        ),
-                      ],
-                      style: TextStyle(height: 1),
+                    Text.rich(
+                      TextSpan(
+                        children: [
+                          TextSpan(
+                            text: user.name,
+                            style: StylesConstants.textDark20w500,
+                          ),
+                          TextSpan(text: '\n'),
+                          TextSpan(
+                            text: user.role,
+                            style: StylesConstants.textDark16w400,
+                          ),
+                        ],
+                        style: TextStyle(height: 1),
+                      ),
                     ),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      context.read<AuthBloc>().add(AuthEvent.logout());
-                    },
-                    icon: Icon(Icons.logout_rounded),
-                  ),
-                ],
+                    IconButton(
+                      onPressed: () {
+                        context.read<AuthBloc>().add(AuthEvent.logout());
+                      },
+                      icon: Icon(Icons.logout_rounded),
+                    ),
+                  ],
+                ),
               ),
             );
           },

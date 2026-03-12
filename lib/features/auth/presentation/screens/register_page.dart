@@ -1,4 +1,9 @@
 import 'package:artist_ums/core/constants/color_constants.dart';
+import 'package:artist_ums/core/constants/image_constants.dart';
+import 'package:artist_ums/core/constants/style_constants.dart';
+import 'package:artist_ums/core/presentation/widgets/generic_elevated_button.dart';
+import 'package:artist_ums/core/presentation/widgets/generic_image.dart';
+import 'package:artist_ums/core/presentation/widgets/generic_scaffold.dart';
 import 'package:artist_ums/core/presentation/widgets/generic_text_field.dart';
 import 'package:artist_ums/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:artist_ums/features/auth/presentation/bloc/auth_event.dart';
@@ -31,7 +36,7 @@ class RegisterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return GenericScaffold(
       backgroundColor: ColorConstant.backgroundColor,
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
@@ -51,154 +56,127 @@ class RegisterPage extends StatelessWidget {
             },
           );
         },
-        child: SafeArea(
-          child: Center(
-            child: SingleChildScrollView(
-              padding: EdgeInsets.symmetric(horizontal: 24.w),
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 420),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    children: [
-                      SizedBox(height: 40.h),
+        child: Center(
+          child: SingleChildScrollView(
+            padding: EdgeInsets.symmetric(horizontal: 24.w),
+            child: ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: 420.w),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    SizedBox(height: 40.h),
 
-                      /// Title
-                      Text(
-                        "Sign Up",
-                        style: Theme.of(context).textTheme.headlineMedium
-                            ?.copyWith(fontWeight: FontWeight.w600),
-                      ),
+                    /// Title
+                    Text(
+                      "Sign Up",
+                      style: Theme.of(context).textTheme.headlineMedium
+                          ?.copyWith(fontWeight: FontWeight.w600),
+                    ),
 
-                      SizedBox(height: 40.h),
+                    SizedBox(height: 40.h),
 
-                      /// Name
-                      GenericTextField(
-                        controller: _nameController,
-                        hint: "Full Name",
-                        icon: Icons.person_outline,
-                        validator: (v) => v!.isEmpty ? "Enter your name" : null,
-                      ),
+                    /// Name
+                    GenericTextField(
+                      controller: _nameController,
+                      hint: "Full Name",
+                      icon: ImageConstants.userNoddingLogoLottie,
+                      validator: (v) => v!.isEmpty ? "Enter your name" : null,
+                    ),
 
-                      SizedBox(height: 16.h),
+                    SizedBox(height: 16.h),
 
-                      /// Email
-                      GenericTextField(
-                        controller: _emailController,
-                        hint: "Phone/Email Id",
-                        icon: Icons.email_outlined,
-                        validator: (v) => v!.isEmpty ? "Enter email" : null,
-                      ),
+                    /// Email
+                    GenericTextField(
+                      controller: _emailController,
+                      hint: "Email Id",
+                      icon: ImageConstants.userLogoLottie,
+                      validator: (v) => v!.isEmpty ? "Enter email" : null,
+                    ),
 
-                      SizedBox(height: 16.h),
+                    SizedBox(height: 16.h),
 
-                      /// Password
-                      GenericTextField(
-                        controller: _passwordController,
-                        hint: "Password",
-                        icon: Icons.lock_outline,
-                        isPassword: true,
-                        validator: (v) => v!.length < 6
-                            ? "Password must be 6+ characters"
-                            : null,
-                      ),
+                    /// Password
+                    GenericTextField(
+                      controller: _passwordController,
+                      hint: "Password",
+                      icon: ImageConstants.passwordLogoLottie,
+                      isPassword: true,
+                      validator: (v) => v!.length < 6
+                          ? "Password must be 6+ characters"
+                          : null,
+                    ),
 
-                      SizedBox(height: 24.h),
+                    SizedBox(height: 24.h),
 
-                      /// Register Button
-                      BlocBuilder<AuthBloc, AuthState>(
-                        builder: (context, state) {
-                          final isLoading = state.maybeWhen(
-                            orElse: () => false,
-                            loading: () => true,
-                          );
+                    /// Register Button
+                    BlocBuilder<AuthBloc, AuthState>(
+                      builder: (context, state) {
+                        final isLoading = state.maybeWhen(
+                          orElse: () => false,
+                          loading: () => true,
+                        );
+                        return GenericElevatedButton(
+                          title: 'Create Account',
+                          onPressed: () => _register(context),
+                          loading: isLoading,
+                        );
+                      },
+                    ),
+                    SizedBox(height: 30.h),
 
-                          return SizedBox(
-                            width: double.infinity,
-                            height: 55.h,
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: ColorConstant.primaryColor,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30),
-                                ),
-                              ),
-                              onPressed: isLoading
-                                  ? null
-                                  : () => _register(context),
-                              child: isLoading
-                                  ? const CircularProgressIndicator(
-                                      color: Colors.white,
-                                    )
-                                  : const Text("Create Account"),
-                            ),
-                          );
-                        },
-                      ),
-
-                      SizedBox(height: 30.h),
-
-                      /// Divider
-                      Row(
-                        children: [
-                          const Expanded(child: Divider()),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 10.w),
-                            child: const Text("OR"),
+                    Row(
+                      children: [
+                        const Expanded(child: Divider()),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 10.w),
+                          child: Text(
+                            "OR",
+                            style: StylesConstants.textDark16w500,
                           ),
-                          const Expanded(child: Divider()),
-                        ],
-                      ),
+                        ),
+                        const Expanded(child: Divider()),
+                      ],
+                    ),
+                    SizedBox(height: 25.h),
 
-                      SizedBox(height: 25.h),
+                    /// Social login buttons
+                    GenericElevatedButton.circular(
+                      backgroundColor: ColorConstant.whiteColor,
+                      splashColor: ColorConstant.lightPinkColor,
+                      icon: GenericImage.asset(ImageConstants.googleLogoGif),
+                      onPressed: () {
+                        context.read<AuthBloc>().add(
+                          AuthEvent.loginWithGoogle(),
+                        );
+                      },
+                    ),
 
-                      /// Social login buttons
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          _socialButton(Icons.close),
-                          SizedBox(width: 20.w),
-                          _socialButton(Icons.facebook),
-                          SizedBox(width: 20.w),
-                          _socialButton(Icons.g_mobiledata),
-                        ],
-                      ),
+                    SizedBox(height: 30.h),
 
-                      SizedBox(height: 30.h),
-
-                      /// Login link
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text("Joined us before? "),
-                          GestureDetector(
-                            onTap: () => context.go('/login'),
-                            child: Text(
-                              "Sign In",
-                              style: TextStyle(
-                                color: ColorConstant.primaryColor,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Joined us before? ",
+                          style: StylesConstants.textDark14w400,
+                        ),
+                        GestureDetector(
+                          onTap: () => context.push('/login'),
+                          child: Text(
+                            "Log In",
+                            style: StylesConstants.textPrimary14w500,
                           ),
-                        ],
-                      ),
-                    ],
-                  ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
             ),
           ),
         ),
       ),
-    );
-  }
-
-  Widget _socialButton(IconData icon) {
-    return CircleAvatar(
-      radius: 24,
-      backgroundColor: Colors.white,
-      child: Icon(icon),
     );
   }
 }

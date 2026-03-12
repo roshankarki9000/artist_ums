@@ -1,3 +1,4 @@
+import 'package:artist_ums/core/constants/color_constants.dart';
 import 'package:artist_ums/core/constants/style_constants.dart';
 import 'package:artist_ums/core/presentation/widgets/glow.dart';
 import 'package:artist_ums/core/utils/extensions/num_extension.dart';
@@ -108,7 +109,9 @@ class _CustomCalendarState extends State<CustomCalendar> {
                           offset: Offset(0, 5.w),
                         ),
                       ],
-                color: isSelected ? Color(0xFF4527A0) : Colors.white,
+                color: isSelected
+                    ? ColorConstant.primaryColor
+                    : ColorConstant.whiteColor,
                 borderRadius: BorderRadius.circular(18.r),
               ),
               child: Column(

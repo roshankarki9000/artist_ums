@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
@@ -13,9 +15,15 @@ class ArtistBloc extends Bloc<ArtistEvent, ArtistState> {
     on<ArtistEvent>((event, emit) async {
       await event.when(
         loadArtists: () => _loadArtists(emit),
-        createArtist: (name, bio) => _createArtist(emit, name: name, bio: bio),
-        updateArtist: (id, name, bio) =>
-            _updateArtist(emit, id: id, name: name, bio: bio),
+        createArtist: (name, bio, coverUrl) =>
+            _createArtist(emit, name: name, bio: bio, coverUrl: coverUrl),
+        updateArtist: (id, name, bio, coverUrl) => _updateArtist(
+          emit,
+          id: id,
+          name: name,
+          bio: bio,
+          coverUrl: coverUrl,
+        ),
         deleteArtist: (id) => _deleteArtist(emit, id: id),
       );
     });
@@ -36,10 +44,23 @@ class ArtistBloc extends Bloc<ArtistEvent, ArtistState> {
     Emitter<ArtistState> emit, {
     required String name,
     required String? bio,
+    required File? coverUrl,
   }) async {
     emit(const ArtistState.loading());
+    String? coverUrl_;
+    if (coverUrl != null) {
+      final uploadResult = await _repository.uploadArtistCover(file: coverUrl);
+      uploadResult.fold(
+        (failure) => emit(ArtistState.error(failure.message)),
+        (url) => coverUrl_ = url,
+      );
+    }
 
-    final result = await _repository.createArtist(name: name, bio: bio);
+    final result = await _repository.createArtist(
+      name: name,
+      bio: bio,
+      coverUrl: coverUrl_,
+    );
 
     result.fold(
       (failure) => emit(ArtistState.error(failure.message)),
@@ -52,6 +73,7 @@ class ArtistBloc extends Bloc<ArtistEvent, ArtistState> {
     required String id,
     required String name,
     required String? bio,
+    required File? coverUrl,
   }) async {
     emit(const ArtistState.loading());
 

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:artist_ums/core/utils/extensions/log_extension.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -103,6 +105,59 @@ class ApiClient {
     }
 
     return builder.map((data) => data.map((e) => fromJson(e)).toList());
+  }
+
+  /// Upload file to Supabase Storage
+  Future<String> uploadFile({
+    required String bucket,
+    required File file,
+    required String path,
+  }) async {
+    "UPLOAD → bucket:$bucket | path:$path".logApi(type: "ApiClient");
+
+    await _client.storage
+        .from(bucket)
+        .upload(path, file, fileOptions: const FileOptions(upsert: true));
+
+    "UPLOAD SUCCESS".logApi(type: "ApiClient");
+
+    return path;
+  }
+
+  /// Get public URL of uploaded file
+  String getPublicUrl({required String bucket, required String path}) {
+    final url = _client.storage.from(bucket).getPublicUrl(path);
+
+    "PUBLIC URL → $url".logApi(type: "ApiClient");
+
+    return url;
+  }
+
+  /// Upload image and return public URL
+  Future<String> uploadImageAndGetUrl({
+    required String bucket,
+    required File file,
+    String? folder,
+  }) async {
+    final fileName = DateTime.now().millisecondsSinceEpoch.toString();
+
+    final path = folder != null ? "$folder/$fileName.jpg" : "$fileName.jpg";
+
+    await uploadFile(bucket: bucket, file: file, path: path);
+
+    return getPublicUrl(bucket: bucket, path: path);
+  }
+
+  /// Delete file from storage
+  Future<void> deleteFile({
+    required String bucket,
+    required String path,
+  }) async {
+    "DELETE FILE → bucket:$bucket | path:$path".logApi(type: "ApiClient");
+
+    await _client.storage.from(bucket).remove([path]);
+
+    "DELETE SUCCESS".logApi(type: "ApiClient");
   }
 }
 
