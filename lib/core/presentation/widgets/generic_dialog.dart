@@ -3,6 +3,7 @@ import 'package:artist_ums/core/constants/style_constants.dart';
 import 'package:artist_ums/core/presentation/widgets/generic_elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 class GenericDialog {
   static Future<void> show(
@@ -34,11 +35,11 @@ class GenericDialog {
                 title: title,
                 subtitle: subtitle,
                 onYes: () {
-                  Navigator.pop(context);
+                  context.pop(context);
                   onYes?.call();
                 },
                 onNo: () {
-                  Navigator.pop(context);
+                  context.pop(context);
                   onNo?.call();
                 },
               ),

@@ -2,6 +2,7 @@ import 'package:artist_ums/core/constants/color_constants.dart';
 import 'package:artist_ums/core/constants/style_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 class SongsHeader extends StatelessWidget {
   final int songCount;
@@ -23,7 +24,7 @@ class SongsHeader extends StatelessWidget {
           size: 20.sp,
         ),
         onPressed: () {
-          Navigator.pop(context);
+          context.pop(context);
         },
       ),
 

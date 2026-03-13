@@ -1,3 +1,4 @@
+import 'package:artist_ums/core/app_router/app_routes.dart';
 import 'package:artist_ums/core/constants/color_constants.dart';
 import 'package:artist_ums/core/constants/image_constants.dart';
 import 'package:artist_ums/core/constants/style_constants.dart';
@@ -17,7 +18,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
 
 class ProfileTab extends StatelessWidget {
   const ProfileTab({super.key});
@@ -51,7 +51,7 @@ class ProfileTab extends StatelessWidget {
                   PopupMenuButton(
                     itemBuilder: (_) => [
                       PopupMenuItem(
-                        onTap: () => context.push('/profile/edit'),
+                        onTap: () => EditProfileRoute().push(context),
                         value: 'editProfile',
                         child: Text(
                           "Edit Profile",

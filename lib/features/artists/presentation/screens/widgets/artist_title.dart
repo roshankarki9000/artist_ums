@@ -1,3 +1,4 @@
+import 'package:artist_ums/core/app_router/app_routes.dart';
 import 'package:artist_ums/core/constants/color_constants.dart';
 import 'package:artist_ums/core/constants/image_constants.dart';
 import 'package:artist_ums/core/constants/style_constants.dart';
@@ -10,8 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'package:go_router/go_router.dart';
-
 class ArtistTile extends StatelessWidget {
   final ArtistModel artist;
 
@@ -22,7 +21,7 @@ class ArtistTile extends StatelessWidget {
   }
 
   void _edit(BuildContext context) {
-    context.push('/artists/edit-artist/${artist.id}');
+    EditArtistRoute(id: artist.id).push(context);
   }
 
   @override
@@ -52,7 +51,11 @@ class ArtistTile extends StatelessWidget {
               ),
       ),
       title: Text(artist.name, style: StylesConstants.textDark16w600),
-      subtitle: Text(artist.bio ?? "N/A"),
+      subtitle: Text(
+        artist.bio ?? "N/A",
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis,
+      ),
       trailing: PopupMenuButton(
         onSelected: (value) {
           if (value == 'edit') _edit(context);

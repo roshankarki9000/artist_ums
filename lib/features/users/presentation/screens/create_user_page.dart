@@ -13,6 +13,7 @@ import 'package:artist_ums/features/users/presentation/bloc/user_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 class CreateUserPage extends StatelessWidget {
   const CreateUserPage({super.key});
@@ -24,7 +25,7 @@ class CreateUserPage extends StatelessWidget {
         state.whenOrNull(
           success: () {
             showCustomSuccessToast("User created successfully");
-            Navigator.pop(context);
+            context.pop(context);
           },
           error: (failure) {
             showCustomErrorToast(failure.message);
@@ -75,7 +76,7 @@ class _CreateUserHeader extends StatelessWidget {
           color: ColorConstant.whiteColor,
           size: 20.sp,
         ),
-        onPressed: () => Navigator.pop(context),
+        onPressed: () => context.pop(context),
       ),
 
       flexibleSpace: FlexibleSpaceBar(

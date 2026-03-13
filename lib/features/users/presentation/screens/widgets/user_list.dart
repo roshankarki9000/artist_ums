@@ -2,12 +2,12 @@ import 'package:artist_ums/features/users/domain/entities/user_model.dart';
 import 'package:artist_ums/features/users/presentation/bloc/user_bloc.dart';
 import 'package:artist_ums/features/users/presentation/bloc/user_state.dart';
 import 'package:artist_ums/features/users/presentation/screens/widgets/user_header.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'user_tile.dart';
 import 'add_user_tile.dart';
+import 'user_tile.dart';
 
 class UsersList extends StatelessWidget {
   final List<UserModel> users;
@@ -26,7 +26,7 @@ class UsersList extends StatelessWidget {
             builder: (context, state) {
               return state.maybeWhen(
                 loading: () => const SliverFillRemaining(
-                  child: Center(child: CircularProgressIndicator()),
+                  child: Center(child: CupertinoActivityIndicator()),
                 ),
                 usersLoaded: (users) => SliverList(
                   delegate: SliverChildBuilderDelegate((context, index) {

@@ -1,3 +1,4 @@
+import 'package:artist_ums/core/app_router/app_routes.dart';
 import 'package:artist_ums/core/constants/color_constants.dart';
 import 'package:artist_ums/core/constants/image_constants.dart';
 import 'package:artist_ums/core/constants/style_constants.dart';
@@ -9,7 +10,6 @@ import 'package:artist_ums/features/songs/presentation/bloc/songs_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
 
 class SongTile extends StatelessWidget {
   final SongModel song;
@@ -21,7 +21,7 @@ class SongTile extends StatelessWidget {
   }
 
   void _edit(BuildContext context) {
-    context.push('/songs/edit-song/${song.id}');
+    EditSongRoute(id: song.id).push(context);
   }
 
   @override

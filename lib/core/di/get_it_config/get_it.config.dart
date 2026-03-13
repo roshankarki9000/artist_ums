@@ -12,7 +12,7 @@
 import 'package:app_links/app_links.dart' as _i327;
 import 'package:artist_ums/core/api/api_client.dart' as _i75;
 import 'package:artist_ums/core/api/auth_client.dart' as _i779;
-import 'package:artist_ums/core/app_router.dart' as _i518;
+import 'package:artist_ums/core/app_router/app_router.dart' as _i640;
 import 'package:artist_ums/core/constants/key_constants.dart' as _i893;
 import 'package:artist_ums/core/di/get_it_config/registered_modules.dart'
     as _i349;
@@ -80,7 +80,7 @@ extension GetItInjectableX on _i174.GetIt {
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final registerModule = _$RegisterModule();
-    gh.factory<_i518.AppRouter>(() => _i518.AppRouter());
+    gh.factory<_i640.AppRouter>(() => _i640.AppRouter());
     gh.lazySingleton<_i893.KeyConstants>(() => _i893.KeyConstants());
     gh.lazySingleton<_i973.InternetConnectionChecker>(
       () => registerModule.internetChecker,

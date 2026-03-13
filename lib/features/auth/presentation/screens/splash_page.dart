@@ -1,3 +1,4 @@
+import 'package:artist_ums/core/app_router/app_routes.dart';
 import 'package:artist_ums/core/constants/image_constants.dart';
 import 'package:artist_ums/core/presentation/widgets/generic_image.dart';
 import 'package:artist_ums/core/presentation/widgets/generic_scaffold.dart';
@@ -8,7 +9,6 @@ import 'package:artist_ums/features/auth/presentation/bloc/auth_state.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -48,10 +48,10 @@ class _SplashPageState extends State<SplashPage>
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
           state.whenOrNull(
-            authenticated: (user) => context.go('/dashboard'),
-            unauthenticated: () => context.go('/login'),
-            error: (failure) => context.go('/login'),
-            resetRequired: () => context.go('/login'),
+            authenticated: (user) => DashboardRoute().go(context),
+            unauthenticated: () => LoginRoute().go(context),
+            error: (failure) => LoginRoute().go(context),
+            resetRequired: () => LoginRoute().go(context),
           );
         },
         child: Center(

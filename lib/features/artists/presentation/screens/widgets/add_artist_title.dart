@@ -1,7 +1,7 @@
+import 'package:artist_ums/core/app_router/app_routes.dart';
 import 'package:artist_ums/core/constants/color_constants.dart';
 import 'package:artist_ums/core/constants/style_constants.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AddArtistTile extends StatelessWidget {
@@ -21,7 +21,7 @@ class AddArtistTile extends StatelessWidget {
         child: const Icon(Icons.add),
       ),
       title: Text("Add artist", style: StylesConstants.textDark16w600),
-      onTap: () => context.push('/artists/create-artist'),
+      onTap: () => CreateArtistRoute().push(context),
     );
   }
 }

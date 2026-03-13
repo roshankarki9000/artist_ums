@@ -1,6 +1,7 @@
 import 'package:artist_ums/core/presentation/widgets/generic_paginating_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 typedef LabelBuilder<T> = String Function(T item);
 
@@ -153,7 +154,7 @@ class _GenericDropdownBodyState<T> extends State<_GenericDropdownBody<T>> {
           onItemSelected: (selected) {
             widget.field.didChange(selected);
             widget.onChanged?.call(selected);
-            Navigator.pop(context);
+            context.pop(context);
           },
           onLoadMore: widget.onLoadMore,
           searchMatcher: (item, query) {

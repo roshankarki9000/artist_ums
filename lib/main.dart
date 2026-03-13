@@ -1,4 +1,4 @@
-import 'package:artist_ums/core/app_router.dart';
+import 'package:artist_ums/core/app_router/app_router.dart';
 import 'package:artist_ums/core/constants/key_constants.dart';
 import 'package:artist_ums/core/constants/size_constants.dart';
 import 'package:artist_ums/core/constants/theme_constants.dart';

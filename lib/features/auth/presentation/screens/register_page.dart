@@ -1,3 +1,4 @@
+import 'package:artist_ums/core/app_router/app_routes.dart';
 import 'package:artist_ums/core/constants/color_constants.dart';
 import 'package:artist_ums/core/constants/image_constants.dart';
 import 'package:artist_ums/core/constants/style_constants.dart';
@@ -11,7 +12,6 @@ import 'package:artist_ums/features/auth/presentation/bloc/auth_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
 
 class RegisterPage extends StatelessWidget {
   RegisterPage({super.key});
@@ -46,9 +46,9 @@ class RegisterPage extends StatelessWidget {
                 const SnackBar(content: Text("Account created successfully")),
               );
 
-              context.go('/login');
+              LoginRoute().go(context);
             },
-            authenticated: (_) => context.go('/dashboard'),
+            authenticated: (_) => DashboardRoute().go(context),
             error: (failure) {
               ScaffoldMessenger.of(
                 context,
@@ -162,7 +162,7 @@ class RegisterPage extends StatelessWidget {
                           style: StylesConstants.textDark14w400,
                         ),
                         GestureDetector(
-                          onTap: () => context.push('/login'),
+                          onTap: () => LoginRoute().push(context),
                           child: Text(
                             "Log In",
                             style: StylesConstants.textPrimary14w500,

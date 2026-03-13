@@ -1,3 +1,4 @@
+import 'package:artist_ums/core/app_router/app_routes.dart';
 import 'package:artist_ums/core/constants/color_constants.dart';
 import 'package:artist_ums/core/constants/image_constants.dart';
 import 'package:artist_ums/core/constants/style_constants.dart';
@@ -11,7 +12,6 @@ import 'package:artist_ums/features/auth/presentation/bloc/auth_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
@@ -39,8 +39,8 @@ class LoginPage extends StatelessWidget {
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
           state.whenOrNull(
-            authenticated: (_) => context.go('/dashboard'),
-            resetRequired: () => context.push('/reset-password'),
+            authenticated: (_) => DashboardRoute().go(context),
+            resetRequired: () => ResetPasswordRoute().push(context),
             error: (failure) {
               ScaffoldMessenger.of(
                 context,
@@ -140,7 +140,7 @@ class LoginPage extends StatelessWidget {
                           style: StylesConstants.textDark14w400,
                         ),
                         GestureDetector(
-                          onTap: () => context.push('/register'),
+                          onTap: () => RegisterRoute().push(context),
                           child: Text(
                             "Register",
                             style: StylesConstants.textPrimary14w500,

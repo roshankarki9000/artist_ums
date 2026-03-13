@@ -1,8 +1,8 @@
+import 'package:artist_ums/core/app_router/app_routes.dart';
 import 'package:artist_ums/core/constants/color_constants.dart';
 import 'package:artist_ums/core/constants/style_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
 
 class AddSongTile extends StatelessWidget {
   const AddSongTile({super.key});
@@ -21,7 +21,7 @@ class AddSongTile extends StatelessWidget {
         child: const Icon(Icons.add),
       ),
       title: Text("Add songs", style: StylesConstants.textDark16w600),
-      onTap: () => context.push('/songs/create-song'),
+      onTap: () => CreateSongRoute().push(context),
     );
   }
 }

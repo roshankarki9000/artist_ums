@@ -1,6 +1,4 @@
 class ImageConstants {
-  static String get _png => 'assets/pngs';
-  static String get _svg => 'assets/svgs';
   static String get _gif => 'assets/gifs';
   static String get _lottie => 'assets/lotties';
 

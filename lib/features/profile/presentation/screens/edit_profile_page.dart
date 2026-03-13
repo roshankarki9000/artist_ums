@@ -19,6 +19,7 @@ import 'package:artist_ums/features/profile/presentation/bloc/profile_state.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 class EditProfilePage extends StatelessWidget {
   const EditProfilePage({super.key});
@@ -31,7 +32,7 @@ class EditProfilePage extends StatelessWidget {
           success: (msg) {
             showCustomSuccessToast("Profile updated successfully");
             context.read<AuthBloc>().add(AuthEvent.checkSession());
-            Navigator.pop(context);
+            context.pop(context);
           },
           error: (failure) {
             showCustomErrorToast(failure);
@@ -81,7 +82,7 @@ class _EditProfileHeader extends StatelessWidget {
           color: ColorConstant.whiteColor,
           size: 20.sp,
         ),
-        onPressed: () => Navigator.pop(context),
+        onPressed: () => context.pop(context),
       ),
       flexibleSpace: FlexibleSpaceBar(
         background: Container(

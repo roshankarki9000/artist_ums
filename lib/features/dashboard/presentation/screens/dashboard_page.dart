@@ -1,3 +1,4 @@
+import 'package:artist_ums/core/app_router/app_routes.dart';
 import 'package:artist_ums/core/presentation/widgets/generic_scaffold.dart';
 import 'package:artist_ums/features/artists/presentation/bloc/artist_bloc.dart';
 import 'package:artist_ums/features/artists/presentation/bloc/artist_event.dart';
@@ -16,7 +17,6 @@ import 'package:artist_ums/features/users/presentation/bloc/user_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
@@ -28,12 +28,15 @@ class DashboardPage extends StatefulWidget {
 class _DashboardPageState extends State<DashboardPage> {
   @override
   void didChangeDependencies() {
+    _load();
+    super.didChangeDependencies();
+  }
+
+  void _load() async {
     context.read<UserBloc>().add(UserEvent.getUsers());
     context.read<ArtistBloc>().add(ArtistEvent.loadArtists());
     context.read<SongBloc>().add(SongEvent.loadSongs());
     context.read<ProfileBloc>().add(ProfileEvent.loadProfile());
-
-    super.didChangeDependencies();
   }
 
   @override
@@ -41,20 +44,23 @@ class _DashboardPageState extends State<DashboardPage> {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) => state.maybeWhen(
         orElse: () => null,
-        unauthenticated: () => context.go('/splash'),
+        unauthenticated: () => SplashRoute().go(context),
       ),
       child: GenericScaffold(
         enableDoubleTapExit: true,
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              DashboardAppBar(),
-              SizedBox(height: 20.h),
-              CustomCalendar(),
-              Activity(),
-              SizedBox(height: 30.h),
-              ActivitiesLog(),
-            ],
+        body: RefreshIndicator(
+          onRefresh: () async => _load(),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                DashboardAppBar(),
+                SizedBox(height: 20.h),
+                CustomCalendar(),
+                Activity(),
+                SizedBox(height: 30.h),
+                ActivitiesLog(),
+              ],
+            ),
           ),
         ),
       ),

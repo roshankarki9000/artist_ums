@@ -1,3 +1,4 @@
+import 'package:artist_ums/core/app_router/app_routes.dart';
 import 'package:artist_ums/core/constants/color_constants.dart';
 import 'package:artist_ums/core/constants/image_constants.dart';
 import 'package:artist_ums/core/presentation/widgets/generic_scaffold.dart';
@@ -5,10 +6,10 @@ import 'package:artist_ums/core/presentation/widgets/generic_text_field.dart';
 import 'package:artist_ums/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:artist_ums/features/auth/presentation/bloc/auth_event.dart';
 import 'package:artist_ums/features/auth/presentation/bloc/auth_state.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
 
 class ResetPasswordPage extends StatelessWidget {
   ResetPasswordPage({super.key});
@@ -34,7 +35,7 @@ class ResetPasswordPage extends StatelessWidget {
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
           state.whenOrNull(
-            authenticated: (_) => context.go('/dashboard'),
+            authenticated: (_) => DashboardRoute().go(context),
 
             /// after reset → go login
             unauthenticated: () {
@@ -42,7 +43,7 @@ class ResetPasswordPage extends StatelessWidget {
                 const SnackBar(content: Text("Password reset successfully")),
               );
 
-              context.go('/login');
+              LoginRoute().go(context);
             },
 
             error: (failure) {
@@ -125,7 +126,7 @@ class ResetPasswordPage extends StatelessWidget {
                             ),
                             onPressed: isLoading ? null : () => _reset(context),
                             child: isLoading
-                                ? const CircularProgressIndicator(
+                                ? const CupertinoActivityIndicator(
                                     color: Colors.white,
                                   )
                                 : const Text("Submit"),

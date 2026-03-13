@@ -16,6 +16,7 @@ import 'package:artist_ums/features/artists/presentation/bloc/artist_state.dart'
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 class CreateArtistPage extends StatelessWidget {
   const CreateArtistPage({super.key});
@@ -27,7 +28,7 @@ class CreateArtistPage extends StatelessWidget {
         state.whenOrNull(
           success: (message) {
             showCustomSuccessToast(message);
-            Navigator.pop(context);
+            context.pop(context);
           },
           error: (msg) {
             showCustomErrorToast(msg);
@@ -77,7 +78,7 @@ class _CreateArtistHeader extends StatelessWidget {
           color: ColorConstant.whiteColor,
           size: 20.sp,
         ),
-        onPressed: () => Navigator.pop(context),
+        onPressed: () => context.pop(context),
       ),
       flexibleSpace: FlexibleSpaceBar(
         background: Container(

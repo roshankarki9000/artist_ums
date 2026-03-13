@@ -21,6 +21,7 @@ import 'package:artist_ums/features/songs/presentation/bloc/songs_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 class EditSongPage extends StatelessWidget {
   final String id;
@@ -34,7 +35,7 @@ class EditSongPage extends StatelessWidget {
         state.whenOrNull(
           success: (message) {
             showCustomWarningToast("Song updated successfully");
-            Navigator.pop(context);
+            context.pop(context);
           },
           error: (msg) {
             showCustomErrorToast(msg);
@@ -86,7 +87,7 @@ class _EditSongHeader extends StatelessWidget {
           color: ColorConstant.whiteColor,
           size: 20.sp,
         ),
-        onPressed: () => Navigator.pop(context),
+        onPressed: () => context.pop(context),
       ),
       flexibleSpace: FlexibleSpaceBar(
         background: Container(
