@@ -3,37 +3,37 @@ import 'package:artist_ums/core/constants/image_constants.dart';
 import 'package:artist_ums/core/constants/style_constants.dart';
 import 'package:artist_ums/core/presentation/widgets/generic_dialog.dart';
 import 'package:artist_ums/core/presentation/widgets/generic_image.dart';
-import 'package:artist_ums/features/songs/domain/entities/song_model.dart';
-import 'package:artist_ums/features/songs/presentation/bloc/songs_bloc.dart';
-import 'package:artist_ums/features/songs/presentation/bloc/songs_event.dart';
+import 'package:artist_ums/features/artists/domain/entities/artist_model.dart';
+import 'package:artist_ums/features/artists/presentation/bloc/artist_bloc.dart';
+import 'package:artist_ums/features/artists/presentation/bloc/artist_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:go_router/go_router.dart';
 
-class SongTile extends StatelessWidget {
-  final SongModel song;
+class ArtistTile extends StatelessWidget {
+  final ArtistModel artist;
 
-  const SongTile({super.key, required this.song});
+  const ArtistTile({super.key, required this.artist});
 
   void _delete(BuildContext context) {
-    context.read<SongBloc>().add(SongEvent.deleteSong(id: song.id));
+    context.read<ArtistBloc>().add(ArtistEvent.deleteArtist(id: artist.id));
   }
 
   void _edit(BuildContext context) {
-    context.push('/songs/edit-song/${song.id}');
+    context.push('/artists/edit-artist/${artist.id}');
   }
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      contentPadding: EdgeInsets.symmetric(vertical: 6.h),
-
+      contentPadding: EdgeInsets.zero,
       leading: ClipRRect(
-        borderRadius: BorderRadius.circular(6.r),
-        child: song.coverUrl != null
+        borderRadius: BorderRadius.circular(50.r),
+        child: artist.coverUrl != null
             ? GenericImage.network(
-                song.coverUrl!,
+                artist.coverUrl!,
                 width: 50.r,
                 height: 50.r,
                 fit: BoxFit.cover,
@@ -44,42 +44,30 @@ class SongTile extends StatelessWidget {
                 color: ColorConstant.disabledBackground1,
                 child: Center(
                   child: GenericImage.asset(
-                    ImageConstants.noMusicLogoGif,
+                    ImageConstants.noArtistLogoGif,
                     width: 35.r,
                     height: 35.r,
                   ),
                 ),
               ),
       ),
-
-      title: Text(song.title, style: StylesConstants.textDark16w600),
-
-      subtitle: Text(
-        song.album ?? "N/A",
-        style: StylesConstants.textDark14w400,
-      ),
-
+      title: Text(artist.name, style: StylesConstants.textDark16w600),
+      subtitle: Text(artist.bio ?? "N/A"),
       trailing: PopupMenuButton(
         onSelected: (value) {
+          if (value == 'edit') _edit(context);
           if (value == 'delete') {
             GenericDialog.show(
               context,
-              title: 'Delete Song',
-              subtitle: 'Are you sure you want to delete this song?',
+              title: 'Delete Artist',
+              subtitle: 'Are you sure you want to delete this artist?',
               onYes: () => _delete(context),
             );
           }
-          if (value == 'edit') _edit(context);
         },
-        itemBuilder: (context) => [
-          PopupMenuItem(
-            value: 'edit',
-            child: Text("Edit", style: StylesConstants.textDark16w400),
-          ),
-          PopupMenuItem(
-            value: 'delete',
-            child: Text("Delete", style: StylesConstants.textDark16w400),
-          ),
+        itemBuilder: (_) => [
+          const PopupMenuItem(value: 'edit', child: Text("Edit")),
+          const PopupMenuItem(value: 'delete', child: Text("Delete")),
         ],
       ),
     );

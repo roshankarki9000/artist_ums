@@ -47,6 +47,12 @@ import 'package:artist_ums/features/auth/domain/repository/auth_repository.dart'
     as _i977;
 import 'package:artist_ums/features/auth/presentation/bloc/auth_bloc.dart'
     as _i681;
+import 'package:artist_ums/features/profile/data/profile_repo_impl.dart'
+    as _i856;
+import 'package:artist_ums/features/profile/domain/repository/profile_repository.dart'
+    as _i331;
+import 'package:artist_ums/features/profile/presentation/bloc/profile_bloc.dart'
+    as _i624;
 import 'package:artist_ums/features/songs/data/repository/songs_repo_impl.dart'
     as _i875;
 import 'package:artist_ums/features/songs/domain/repository/songs_repository.dart'
@@ -140,6 +146,16 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i309.ActivityLogBloc>(
       () => _i309.ActivityLogBloc(gh<_i346.ActivityLogRepository>()),
+    );
+    gh.lazySingleton<_i331.ProfileRepository>(
+      () => _i856.ProfileRepoImpl(
+        gh<_i75.ApiClient>(),
+        gh<_i566.RepositoryGuard>(),
+        gh<_i779.AuthClient>(),
+      ),
+    );
+    gh.factory<_i624.ProfileBloc>(
+      () => _i624.ProfileBloc(gh<_i331.ProfileRepository>()),
     );
     gh.factory<_i153.ArtistBloc>(
       () => _i153.ArtistBloc(gh<_i150.ArtistRepository>()),

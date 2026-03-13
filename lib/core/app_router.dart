@@ -8,6 +8,8 @@ import 'package:artist_ums/features/auth/presentation/screens/register_page.dart
 import 'package:artist_ums/features/auth/presentation/screens/reset_password_page.dart';
 import 'package:artist_ums/features/auth/presentation/screens/splash_page.dart';
 import 'package:artist_ums/features/dashboard/presentation/screens/dashboard_page.dart';
+import 'package:artist_ums/features/profile/presentation/screens/edit_profile_page.dart';
+import 'package:artist_ums/features/profile/presentation/screens/profile_page.dart';
 import 'package:artist_ums/features/songs/presentation/screens/create_song_page.dart';
 import 'package:artist_ums/features/songs/presentation/screens/edit_song_page.dart';
 import 'package:artist_ums/features/songs/presentation/screens/songs_page.dart';
@@ -149,6 +151,16 @@ class AppRouter {
                 final id = state.pathParameters['id']!;
                 return EditSongPage(id: id);
               },
+            ),
+          ],
+        ),
+        GoRoute(
+          path: '/profile',
+          builder: (context, state) => const ProfilePage(),
+          routes: [
+            GoRoute(
+              path: '/edit',
+              builder: (context, state) => EditProfilePage(),
             ),
           ],
         ),

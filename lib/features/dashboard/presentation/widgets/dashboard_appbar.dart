@@ -3,12 +3,12 @@ import 'package:artist_ums/core/constants/style_constants.dart';
 import 'package:artist_ums/core/presentation/widgets/generic_image.dart';
 import 'package:artist_ums/core/presentation/widgets/glow.dart';
 import 'package:artist_ums/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:artist_ums/features/auth/presentation/bloc/auth_event.dart';
 import 'package:artist_ums/features/auth/presentation/bloc/auth_state.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 class DashboardAppBar extends StatelessWidget {
   final EdgeInsets contentPadding;
@@ -28,20 +28,28 @@ class DashboardAppBar extends StatelessWidget {
               child: Padding(
                 padding: contentPadding,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  spacing: 10.w,
                   children: [
                     Glow(
-                      child: Container(
-                        height: 60.r,
-                        width: 60.r,
-                        decoration: BoxDecoration(shape: BoxShape.circle),
-                        child: Transform.scale(
-                          scale: 1.5,
-                          child: Center(
-                            child: GenericImage.lottieAsset(
-                              ImageConstants.avatarLogoLottie,
-                            ),
-                          ),
+                      child: GestureDetector(
+                        onTap: () => context.push('/profile'),
+                        child: Container(
+                          height: 60.r,
+                          width: 60.r,
+                          decoration: BoxDecoration(shape: BoxShape.circle),
+                          child: user.coverUrl != null
+                              ? ClipRRect(
+                                  borderRadius: BorderRadius.circular(60.r),
+                                  child: GenericImage.network(user.coverUrl!),
+                                )
+                              : Transform.scale(
+                                  scale: 1.5,
+                                  child: Center(
+                                    child: GenericImage.lottieAsset(
+                                      ImageConstants.avatarLogoLottie,
+                                    ),
+                                  ),
+                                ),
                         ),
                       ),
                     ),
@@ -60,12 +68,6 @@ class DashboardAppBar extends StatelessWidget {
                         ],
                         style: TextStyle(height: 1),
                       ),
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        context.read<AuthBloc>().add(AuthEvent.logout());
-                      },
-                      icon: Icon(Icons.logout_rounded),
                     ),
                   ],
                 ),

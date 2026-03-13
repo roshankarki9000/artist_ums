@@ -206,7 +206,7 @@ class _CreateSongFormState extends State<_CreateSongForm> {
           GenericTextField(
             controller: albumController,
             hint: "Album",
-            icon: ImageConstants.userLogoLottie,
+            icon: ImageConstants.userNoddingLogoLottie,
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return "Please enter album name";

@@ -21,6 +21,7 @@ class ImageConstants {
   static String get musicLogoGif => '$_gif/music.gif';
   static String get noMusicLogoGif => '$_gif/no_music.gif';
   static String get noArtistLogoGif => '$_gif/no_artist.gif';
+  static String get notFoundLogoGif => '$_gif/not_found.gif';
 
   static String get workingDaysLogoGif => '$_gif/working_days.gif';
   static String get googleLogoGif => '$_gif/google.gif';

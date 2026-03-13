@@ -62,10 +62,10 @@ class ArtistBloc extends Bloc<ArtistEvent, ArtistState> {
       coverUrl: coverUrl_,
     );
 
-    result.fold(
-      (failure) => emit(ArtistState.error(failure.message)),
-      (_) => add(const ArtistEvent.loadArtists()),
-    );
+    result.fold((failure) => emit(ArtistState.error(failure.message)), (_) {
+      emit(const ArtistState.success('Artist Added Successfully'));
+      add(const ArtistEvent.loadArtists());
+    });
   }
 
   Future<void> _updateArtist(
@@ -79,10 +79,10 @@ class ArtistBloc extends Bloc<ArtistEvent, ArtistState> {
 
     final result = await _repository.updateArtist(id: id, name: name, bio: bio);
 
-    result.fold(
-      (failure) => emit(ArtistState.error(failure.message)),
-      (_) => add(const ArtistEvent.loadArtists()),
-    );
+    result.fold((failure) => emit(ArtistState.error(failure.message)), (_) {
+      emit(const ArtistState.success('Artist Updated Successfully'));
+      add(const ArtistEvent.loadArtists());
+    });
   }
 
   Future<void> _deleteArtist(

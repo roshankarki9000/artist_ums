@@ -11,12 +11,19 @@ abstract class UserModel with _$UserModel {
     required String email,
     required String role,
 
+    @JsonKey(name: "cover_url") String? coverUrl,
+
     @JsonKey(name: 'creator_user_id') required String creatorUserId,
 
     @JsonKey(name: 'created_at') required DateTime createdAt,
 
     @JsonKey(name: 'is_active') required bool isActive,
+
     @JsonKey(name: 'password_reset_done') required bool passwordResetDone,
+
+    @JsonKey(name: 'artists_created') @Default(0) int artistsCreated,
+
+    @JsonKey(name: 'songs_created') @Default(0) int songsCreated,
   }) = _UserModel;
 
   factory UserModel.fromJson(Map<String, dynamic> json) =>

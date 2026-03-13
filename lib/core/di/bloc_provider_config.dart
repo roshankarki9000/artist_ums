@@ -4,6 +4,7 @@ import 'package:artist_ums/core/presentation/widgets/connectivity/bloc/connectiv
 import 'package:artist_ums/features/activity_logs/presentation/bloc/activity_log_bloc.dart';
 import 'package:artist_ums/features/artists/presentation/bloc/artist_bloc.dart';
 import 'package:artist_ums/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:artist_ums/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:artist_ums/features/songs/presentation/bloc/songs_bloc.dart';
 import 'package:artist_ums/features/users/presentation/bloc/user_bloc.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +27,7 @@ class BlocProviderConfig extends StatelessWidget {
         BlocProvider(create: (_) => getIt<ArtistBloc>()),
         BlocProvider(create: (_) => getIt<SongBloc>()),
         BlocProvider(create: (_) => getIt<ActivityLogBloc>()),
+        BlocProvider(create: (_) => getIt<ProfileBloc>()),
       ],
       child: child,
     );

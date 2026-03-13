@@ -12,7 +12,7 @@ class GenericTextField extends StatefulWidget {
   final String icon;
   final bool isPassword;
   final String? Function(String?)? validator;
-
+  final bool enabled;
   const GenericTextField({
     super.key,
     required this.controller,
@@ -20,6 +20,7 @@ class GenericTextField extends StatefulWidget {
     required this.icon,
     this.isPassword = false,
     this.validator,
+    this.enabled = true,
   });
 
   @override
@@ -32,6 +33,7 @@ class _GenericTextFieldState extends State<GenericTextField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      enabled: widget.enabled,
       onTapOutside: (event) {
         FocusManager.instance.primaryFocus?.unfocus();
       },

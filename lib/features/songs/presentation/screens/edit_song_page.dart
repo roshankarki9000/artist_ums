@@ -5,6 +5,7 @@ import 'package:artist_ums/core/constants/image_constants.dart';
 import 'package:artist_ums/core/constants/style_constants.dart';
 import 'package:artist_ums/core/presentation/generic_image_picker/generic_image_picker.dart';
 import 'package:artist_ums/core/presentation/generic_image_picker/image_picker_helper.dart';
+import 'package:artist_ums/core/presentation/widgets/generic_dialog.dart';
 import 'package:artist_ums/core/presentation/widgets/generic_dropdown/generic_dropdown.dart';
 import 'package:artist_ums/core/presentation/widgets/generic_elevated_button.dart';
 import 'package:artist_ums/core/presentation/widgets/generic_scaffold.dart';
@@ -271,7 +272,12 @@ class _EditSongFormState extends State<_EditSongForm> {
               return GenericElevatedButton(
                 title: "Update Song",
                 loading: loading,
-                onPressed: _submit,
+                onPressed: () => GenericDialog.show(
+                  context,
+                  title: 'Update Song',
+                  subtitle: 'Are you sure you want to update this song?',
+                  onYes: () => _submit(),
+                ),
               );
             },
           ),

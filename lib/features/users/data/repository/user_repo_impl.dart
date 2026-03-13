@@ -20,7 +20,7 @@ class UserRepositoryImpl implements UserRepository {
   Future<EitherOr<Failure, List<UserModel>>> getUsers() {
     return guard.run(() async {
       final response = await apiClient.request(
-        table: 'users',
+        table: 'user_stats',
         type: RequestType.get,
       );
 

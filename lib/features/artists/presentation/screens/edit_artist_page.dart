@@ -5,6 +5,7 @@ import 'package:artist_ums/core/constants/image_constants.dart';
 import 'package:artist_ums/core/constants/style_constants.dart';
 import 'package:artist_ums/core/presentation/generic_image_picker/generic_image_picker.dart';
 import 'package:artist_ums/core/presentation/generic_image_picker/image_picker_helper.dart';
+import 'package:artist_ums/core/presentation/widgets/generic_dialog.dart';
 import 'package:artist_ums/core/presentation/widgets/generic_elevated_button.dart';
 import 'package:artist_ums/core/presentation/widgets/generic_scaffold.dart';
 import 'package:artist_ums/core/presentation/widgets/generic_text_field.dart';
@@ -222,7 +223,7 @@ class _EditArtistFormState extends State<_EditArtistForm> {
           GenericTextField(
             controller: bioController,
             hint: "Artist Bio",
-            icon: ImageConstants.userLogoLottie,
+            icon: ImageConstants.userNoddingLogoLottie,
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return "Please enter artist bio";
@@ -243,7 +244,12 @@ class _EditArtistFormState extends State<_EditArtistForm> {
               return GenericElevatedButton(
                 title: "Update Artist",
                 loading: loading,
-                onPressed: _submit,
+                onPressed: () => GenericDialog.show(
+                  context,
+                  title: 'Update Artist',
+                  subtitle: 'Are you sure you want to update this artist?',
+                  onYes: () => _submit(),
+                ),
               );
             },
           ),

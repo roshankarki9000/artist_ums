@@ -57,6 +57,7 @@ class StylesConstants {
   static TextStyle get textDark16w500 => _textDark(16.sp, FontWeight.w500);
 
   static TextStyle get textDark24w600 => _textDark(24.sp, FontWeight.w600);
+  static TextStyle get textDark20w700 => _textDark(20.sp, FontWeight.w700);
 
   static TextStyle get textDark24w700 => _textDark(24.sp, FontWeight.w700);
 

@@ -26,7 +26,7 @@ class CreateArtistPage extends StatelessWidget {
       listener: (context, state) {
         state.whenOrNull(
           success: (message) {
-            showCustomSuccessToast("Artist created successfully");
+            showCustomSuccessToast(message);
             Navigator.pop(context);
           },
           error: (msg) {
@@ -185,7 +185,7 @@ class _CreateArtistFormState extends State<_CreateArtistForm> {
           GenericTextField(
             controller: bioController,
             hint: "Artist Bio",
-            icon: ImageConstants.userLogoLottie,
+            icon: ImageConstants.userNoddingLogoLottie,
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return "Please enter artist bio";

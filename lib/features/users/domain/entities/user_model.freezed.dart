@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$UserModel {
 
- String get id; String get name; String get email; String get role;@JsonKey(name: 'creator_user_id') String get creatorUserId;@JsonKey(name: 'created_at') DateTime get createdAt;@JsonKey(name: 'is_active') bool get isActive;@JsonKey(name: 'password_reset_done') bool get passwordResetDone;
+ String get id; String get name; String get email; String get role;@JsonKey(name: "cover_url") String? get coverUrl;@JsonKey(name: 'creator_user_id') String get creatorUserId;@JsonKey(name: 'created_at') DateTime get createdAt;@JsonKey(name: 'is_active') bool get isActive;@JsonKey(name: 'password_reset_done') bool get passwordResetDone;@JsonKey(name: 'artists_created') int get artistsCreated;@JsonKey(name: 'songs_created') int get songsCreated;
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $UserModelCopyWith<UserModel> get copyWith => _$UserModelCopyWithImpl<UserModel>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.email, email) || other.email == email)&&(identical(other.role, role) || other.role == role)&&(identical(other.creatorUserId, creatorUserId) || other.creatorUserId == creatorUserId)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.isActive, isActive) || other.isActive == isActive)&&(identical(other.passwordResetDone, passwordResetDone) || other.passwordResetDone == passwordResetDone));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.email, email) || other.email == email)&&(identical(other.role, role) || other.role == role)&&(identical(other.coverUrl, coverUrl) || other.coverUrl == coverUrl)&&(identical(other.creatorUserId, creatorUserId) || other.creatorUserId == creatorUserId)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.isActive, isActive) || other.isActive == isActive)&&(identical(other.passwordResetDone, passwordResetDone) || other.passwordResetDone == passwordResetDone)&&(identical(other.artistsCreated, artistsCreated) || other.artistsCreated == artistsCreated)&&(identical(other.songsCreated, songsCreated) || other.songsCreated == songsCreated));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,email,role,creatorUserId,createdAt,isActive,passwordResetDone);
+int get hashCode => Object.hash(runtimeType,id,name,email,role,coverUrl,creatorUserId,createdAt,isActive,passwordResetDone,artistsCreated,songsCreated);
 
 @override
 String toString() {
-  return 'UserModel(id: $id, name: $name, email: $email, role: $role, creatorUserId: $creatorUserId, createdAt: $createdAt, isActive: $isActive, passwordResetDone: $passwordResetDone)';
+  return 'UserModel(id: $id, name: $name, email: $email, role: $role, coverUrl: $coverUrl, creatorUserId: $creatorUserId, createdAt: $createdAt, isActive: $isActive, passwordResetDone: $passwordResetDone, artistsCreated: $artistsCreated, songsCreated: $songsCreated)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $UserModelCopyWith<$Res>  {
   factory $UserModelCopyWith(UserModel value, $Res Function(UserModel) _then) = _$UserModelCopyWithImpl;
 @useResult
 $Res call({
- String id, String name, String email, String role,@JsonKey(name: 'creator_user_id') String creatorUserId,@JsonKey(name: 'created_at') DateTime createdAt,@JsonKey(name: 'is_active') bool isActive,@JsonKey(name: 'password_reset_done') bool passwordResetDone
+ String id, String name, String email, String role,@JsonKey(name: "cover_url") String? coverUrl,@JsonKey(name: 'creator_user_id') String creatorUserId,@JsonKey(name: 'created_at') DateTime createdAt,@JsonKey(name: 'is_active') bool isActive,@JsonKey(name: 'password_reset_done') bool passwordResetDone,@JsonKey(name: 'artists_created') int artistsCreated,@JsonKey(name: 'songs_created') int songsCreated
 });
 
 
@@ -65,17 +65,20 @@ class _$UserModelCopyWithImpl<$Res>
 
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? email = null,Object? role = null,Object? creatorUserId = null,Object? createdAt = null,Object? isActive = null,Object? passwordResetDone = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? email = null,Object? role = null,Object? coverUrl = freezed,Object? creatorUserId = null,Object? createdAt = null,Object? isActive = null,Object? passwordResetDone = null,Object? artistsCreated = null,Object? songsCreated = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
 as String,role: null == role ? _self.role : role // ignore: cast_nullable_to_non_nullable
-as String,creatorUserId: null == creatorUserId ? _self.creatorUserId : creatorUserId // ignore: cast_nullable_to_non_nullable
+as String,coverUrl: freezed == coverUrl ? _self.coverUrl : coverUrl // ignore: cast_nullable_to_non_nullable
+as String?,creatorUserId: null == creatorUserId ? _self.creatorUserId : creatorUserId // ignore: cast_nullable_to_non_nullable
 as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,isActive: null == isActive ? _self.isActive : isActive // ignore: cast_nullable_to_non_nullable
 as bool,passwordResetDone: null == passwordResetDone ? _self.passwordResetDone : passwordResetDone // ignore: cast_nullable_to_non_nullable
-as bool,
+as bool,artistsCreated: null == artistsCreated ? _self.artistsCreated : artistsCreated // ignore: cast_nullable_to_non_nullable
+as int,songsCreated: null == songsCreated ? _self.songsCreated : songsCreated // ignore: cast_nullable_to_non_nullable
+as int,
   ));
 }
 
@@ -160,10 +163,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String email,  String role, @JsonKey(name: 'creator_user_id')  String creatorUserId, @JsonKey(name: 'created_at')  DateTime createdAt, @JsonKey(name: 'is_active')  bool isActive, @JsonKey(name: 'password_reset_done')  bool passwordResetDone)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String email,  String role, @JsonKey(name: "cover_url")  String? coverUrl, @JsonKey(name: 'creator_user_id')  String creatorUserId, @JsonKey(name: 'created_at')  DateTime createdAt, @JsonKey(name: 'is_active')  bool isActive, @JsonKey(name: 'password_reset_done')  bool passwordResetDone, @JsonKey(name: 'artists_created')  int artistsCreated, @JsonKey(name: 'songs_created')  int songsCreated)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _UserModel() when $default != null:
-return $default(_that.id,_that.name,_that.email,_that.role,_that.creatorUserId,_that.createdAt,_that.isActive,_that.passwordResetDone);case _:
+return $default(_that.id,_that.name,_that.email,_that.role,_that.coverUrl,_that.creatorUserId,_that.createdAt,_that.isActive,_that.passwordResetDone,_that.artistsCreated,_that.songsCreated);case _:
   return orElse();
 
 }
@@ -181,10 +184,10 @@ return $default(_that.id,_that.name,_that.email,_that.role,_that.creatorUserId,_
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String email,  String role, @JsonKey(name: 'creator_user_id')  String creatorUserId, @JsonKey(name: 'created_at')  DateTime createdAt, @JsonKey(name: 'is_active')  bool isActive, @JsonKey(name: 'password_reset_done')  bool passwordResetDone)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String email,  String role, @JsonKey(name: "cover_url")  String? coverUrl, @JsonKey(name: 'creator_user_id')  String creatorUserId, @JsonKey(name: 'created_at')  DateTime createdAt, @JsonKey(name: 'is_active')  bool isActive, @JsonKey(name: 'password_reset_done')  bool passwordResetDone, @JsonKey(name: 'artists_created')  int artistsCreated, @JsonKey(name: 'songs_created')  int songsCreated)  $default,) {final _that = this;
 switch (_that) {
 case _UserModel():
-return $default(_that.id,_that.name,_that.email,_that.role,_that.creatorUserId,_that.createdAt,_that.isActive,_that.passwordResetDone);case _:
+return $default(_that.id,_that.name,_that.email,_that.role,_that.coverUrl,_that.creatorUserId,_that.createdAt,_that.isActive,_that.passwordResetDone,_that.artistsCreated,_that.songsCreated);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -201,10 +204,10 @@ return $default(_that.id,_that.name,_that.email,_that.role,_that.creatorUserId,_
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String email,  String role, @JsonKey(name: 'creator_user_id')  String creatorUserId, @JsonKey(name: 'created_at')  DateTime createdAt, @JsonKey(name: 'is_active')  bool isActive, @JsonKey(name: 'password_reset_done')  bool passwordResetDone)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String email,  String role, @JsonKey(name: "cover_url")  String? coverUrl, @JsonKey(name: 'creator_user_id')  String creatorUserId, @JsonKey(name: 'created_at')  DateTime createdAt, @JsonKey(name: 'is_active')  bool isActive, @JsonKey(name: 'password_reset_done')  bool passwordResetDone, @JsonKey(name: 'artists_created')  int artistsCreated, @JsonKey(name: 'songs_created')  int songsCreated)?  $default,) {final _that = this;
 switch (_that) {
 case _UserModel() when $default != null:
-return $default(_that.id,_that.name,_that.email,_that.role,_that.creatorUserId,_that.createdAt,_that.isActive,_that.passwordResetDone);case _:
+return $default(_that.id,_that.name,_that.email,_that.role,_that.coverUrl,_that.creatorUserId,_that.createdAt,_that.isActive,_that.passwordResetDone,_that.artistsCreated,_that.songsCreated);case _:
   return null;
 
 }
@@ -216,17 +219,20 @@ return $default(_that.id,_that.name,_that.email,_that.role,_that.creatorUserId,_
 @JsonSerializable()
 
 class _UserModel implements UserModel {
-  const _UserModel({required this.id, required this.name, required this.email, required this.role, @JsonKey(name: 'creator_user_id') required this.creatorUserId, @JsonKey(name: 'created_at') required this.createdAt, @JsonKey(name: 'is_active') required this.isActive, @JsonKey(name: 'password_reset_done') required this.passwordResetDone});
+  const _UserModel({required this.id, required this.name, required this.email, required this.role, @JsonKey(name: "cover_url") this.coverUrl, @JsonKey(name: 'creator_user_id') required this.creatorUserId, @JsonKey(name: 'created_at') required this.createdAt, @JsonKey(name: 'is_active') required this.isActive, @JsonKey(name: 'password_reset_done') required this.passwordResetDone, @JsonKey(name: 'artists_created') this.artistsCreated = 0, @JsonKey(name: 'songs_created') this.songsCreated = 0});
   factory _UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);
 
 @override final  String id;
 @override final  String name;
 @override final  String email;
 @override final  String role;
+@override@JsonKey(name: "cover_url") final  String? coverUrl;
 @override@JsonKey(name: 'creator_user_id') final  String creatorUserId;
 @override@JsonKey(name: 'created_at') final  DateTime createdAt;
 @override@JsonKey(name: 'is_active') final  bool isActive;
 @override@JsonKey(name: 'password_reset_done') final  bool passwordResetDone;
+@override@JsonKey(name: 'artists_created') final  int artistsCreated;
+@override@JsonKey(name: 'songs_created') final  int songsCreated;
 
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
@@ -241,16 +247,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.email, email) || other.email == email)&&(identical(other.role, role) || other.role == role)&&(identical(other.creatorUserId, creatorUserId) || other.creatorUserId == creatorUserId)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.isActive, isActive) || other.isActive == isActive)&&(identical(other.passwordResetDone, passwordResetDone) || other.passwordResetDone == passwordResetDone));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.email, email) || other.email == email)&&(identical(other.role, role) || other.role == role)&&(identical(other.coverUrl, coverUrl) || other.coverUrl == coverUrl)&&(identical(other.creatorUserId, creatorUserId) || other.creatorUserId == creatorUserId)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.isActive, isActive) || other.isActive == isActive)&&(identical(other.passwordResetDone, passwordResetDone) || other.passwordResetDone == passwordResetDone)&&(identical(other.artistsCreated, artistsCreated) || other.artistsCreated == artistsCreated)&&(identical(other.songsCreated, songsCreated) || other.songsCreated == songsCreated));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,email,role,creatorUserId,createdAt,isActive,passwordResetDone);
+int get hashCode => Object.hash(runtimeType,id,name,email,role,coverUrl,creatorUserId,createdAt,isActive,passwordResetDone,artistsCreated,songsCreated);
 
 @override
 String toString() {
-  return 'UserModel(id: $id, name: $name, email: $email, role: $role, creatorUserId: $creatorUserId, createdAt: $createdAt, isActive: $isActive, passwordResetDone: $passwordResetDone)';
+  return 'UserModel(id: $id, name: $name, email: $email, role: $role, coverUrl: $coverUrl, creatorUserId: $creatorUserId, createdAt: $createdAt, isActive: $isActive, passwordResetDone: $passwordResetDone, artistsCreated: $artistsCreated, songsCreated: $songsCreated)';
 }
 
 
@@ -261,7 +267,7 @@ abstract mixin class _$UserModelCopyWith<$Res> implements $UserModelCopyWith<$Re
   factory _$UserModelCopyWith(_UserModel value, $Res Function(_UserModel) _then) = __$UserModelCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String name, String email, String role,@JsonKey(name: 'creator_user_id') String creatorUserId,@JsonKey(name: 'created_at') DateTime createdAt,@JsonKey(name: 'is_active') bool isActive,@JsonKey(name: 'password_reset_done') bool passwordResetDone
+ String id, String name, String email, String role,@JsonKey(name: "cover_url") String? coverUrl,@JsonKey(name: 'creator_user_id') String creatorUserId,@JsonKey(name: 'created_at') DateTime createdAt,@JsonKey(name: 'is_active') bool isActive,@JsonKey(name: 'password_reset_done') bool passwordResetDone,@JsonKey(name: 'artists_created') int artistsCreated,@JsonKey(name: 'songs_created') int songsCreated
 });
 
 
@@ -278,17 +284,20 @@ class __$UserModelCopyWithImpl<$Res>
 
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? email = null,Object? role = null,Object? creatorUserId = null,Object? createdAt = null,Object? isActive = null,Object? passwordResetDone = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? email = null,Object? role = null,Object? coverUrl = freezed,Object? creatorUserId = null,Object? createdAt = null,Object? isActive = null,Object? passwordResetDone = null,Object? artistsCreated = null,Object? songsCreated = null,}) {
   return _then(_UserModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
 as String,role: null == role ? _self.role : role // ignore: cast_nullable_to_non_nullable
-as String,creatorUserId: null == creatorUserId ? _self.creatorUserId : creatorUserId // ignore: cast_nullable_to_non_nullable
+as String,coverUrl: freezed == coverUrl ? _self.coverUrl : coverUrl // ignore: cast_nullable_to_non_nullable
+as String?,creatorUserId: null == creatorUserId ? _self.creatorUserId : creatorUserId // ignore: cast_nullable_to_non_nullable
 as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,isActive: null == isActive ? _self.isActive : isActive // ignore: cast_nullable_to_non_nullable
 as bool,passwordResetDone: null == passwordResetDone ? _self.passwordResetDone : passwordResetDone // ignore: cast_nullable_to_non_nullable
-as bool,
+as bool,artistsCreated: null == artistsCreated ? _self.artistsCreated : artistsCreated // ignore: cast_nullable_to_non_nullable
+as int,songsCreated: null == songsCreated ? _self.songsCreated : songsCreated // ignore: cast_nullable_to_non_nullable
+as int,
   ));
 }
 

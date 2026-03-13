@@ -41,69 +41,82 @@ class _ArtistsFilterChipsState extends State<ArtistsFilterChips> {
                 loading: () => CupertinoActivityIndicator(
                   color: ColorConstant.darkModeText,
                 ),
-                loaded: (artists) => ListView.separated(
-                  scrollDirection: Axis.horizontal,
-                  padding: EdgeInsets.symmetric(horizontal: 16.w),
-                  itemCount: artists.length,
-                  separatorBuilder: (_, _) => SizedBox(width: 8.w),
-                  itemBuilder: (context, index) {
-                    final artist = artists[index];
-                    final isSelected = selected == artist;
-                    return Row(
-                      children: [
-                        /// CLEAR FILTER BUTTON
-                        if (isSelected)
-                          Padding(
-                            padding: EdgeInsets.only(right: 8.w),
-                            child: GenericElevatedButton.circular(
-                              size: 35.r,
-                              backgroundColor: ColorConstant.darkModePrimary
-                                  .withAlpha(180),
-                              icon: Icon(
-                                Icons.close,
-                                color: ColorConstant.whiteColor,
+                loaded: (artists) {
+                  final visibleArtists = selected == null
+                      ? artists
+                      : artists.where((a) => a.id == selected.id).toList();
+                  return ListView.separated(
+                    scrollDirection: Axis.horizontal,
+                    padding: EdgeInsets.symmetric(horizontal: 16.w),
+                    itemCount: visibleArtists.length,
+                    separatorBuilder: (_, _) => SizedBox(width: 8.w),
+                    itemBuilder: (context, index) {
+                      final artist = visibleArtists[index];
+                      final isSelected = selected == artist;
+                      return AnimatedSize(
+                        duration: Durations.long1,
+                        alignment: Alignment.centerLeft,
+                        curve: Curves.easeInOut,
+                        child: Row(
+                          children: [
+                            /// CLEAR FILTER BUTTON
+                            if (isSelected)
+                              Padding(
+                                padding: EdgeInsets.only(right: 8.w),
+                                child: GenericElevatedButton.circular(
+                                  size: 35.r,
+                                  backgroundColor: ColorConstant.darkModePrimary
+                                      .withAlpha(180),
+                                  icon: Icon(
+                                    Icons.close,
+                                    color: ColorConstant.whiteColor,
+                                  ),
+                                  onPressed: () {
+                                    _selectedArtist.value = null;
+                                    context.read<SongBloc>().add(
+                                      const SongEvent.loadSongs(),
+                                    );
+                                  },
+                                ),
                               ),
-                              onPressed: () {
-                                _selectedArtist.value = null;
-                                context.read<SongBloc>().add(
-                                  const SongEvent.loadSongs(),
-                                );
-                              },
-                            ),
-                          ),
 
-                        GestureDetector(
-                          onTap: () {
-                            _selectedArtist.value = artist;
-                            context.read<SongBloc>().add(
-                              SongEvent.filterSongByArtist(id: artist.id),
-                            );
-                          },
-                          child: Container(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 16.w,
-                              vertical: 6.h,
-                            ),
-                            decoration: BoxDecoration(
-                              color: isSelected
-                                  ? ColorConstant.activeGreen
-                                  : Colors.grey.shade900,
-                              borderRadius: BorderRadius.circular(25.r),
-                            ),
-                            child: Text(
-                              artist.name,
-                              style: StylesConstants.textDark14w600.copyWith(
-                                color: isSelected
-                                    ? ColorConstant.activeLightGreen
-                                    : ColorConstant.whiteColor,
+                            Visibility(
+                              child: GestureDetector(
+                                onTap: () {
+                                  _selectedArtist.value = artist;
+                                  context.read<SongBloc>().add(
+                                    SongEvent.filterSongByArtist(id: artist.id),
+                                  );
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: 16.w,
+                                    vertical: 6.h,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: isSelected
+                                        ? ColorConstant.activeGreen
+                                        : Colors.grey.shade900,
+                                    borderRadius: BorderRadius.circular(25.r),
+                                  ),
+                                  child: Text(
+                                    artist.name,
+                                    style: StylesConstants.textDark14w600
+                                        .copyWith(
+                                          color: isSelected
+                                              ? ColorConstant.activeLightGreen
+                                              : ColorConstant.whiteColor,
+                                        ),
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
+                          ],
                         ),
-                      ],
-                    );
-                  },
-                ),
+                      );
+                    },
+                  );
+                },
               );
             },
           );

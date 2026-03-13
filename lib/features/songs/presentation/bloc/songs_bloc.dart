@@ -79,10 +79,10 @@ class SongBloc extends Bloc<SongEvent, SongState> {
       album: album,
       coverUrl: coverUrl_,
     );
-    result.fold(
-      (failure) => emit(SongState.error(failure.message)),
-      (_) => add(const SongEvent.loadSongs()),
-    );
+    result.fold((failure) => emit(SongState.error(failure.message)), (_) {
+      emit(const SongState.success('Song added successfully'));
+      add(const SongEvent.loadSongs());
+    });
   }
 
   Future<void> _updateSong(
@@ -110,7 +110,7 @@ class SongBloc extends Bloc<SongEvent, SongState> {
       coverUrl: coverUrl_,
     );
     result.fold((failure) => emit(SongState.error(failure.message)), (_) {
-      emit(const SongState.success('Update Success'));
+      emit(const SongState.success('Song updated Successfully'));
       add(const SongEvent.loadSongs());
     });
   }

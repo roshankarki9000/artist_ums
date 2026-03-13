@@ -7,6 +7,8 @@ import 'package:artist_ums/features/dashboard/presentation/widgets/activities_lo
 import 'package:artist_ums/features/dashboard/presentation/widgets/custom_activity.dart';
 import 'package:artist_ums/features/dashboard/presentation/widgets/custom_calender.dart';
 import 'package:artist_ums/features/dashboard/presentation/widgets/dashboard_appbar.dart';
+import 'package:artist_ums/features/profile/presentation/bloc/profile_bloc.dart';
+import 'package:artist_ums/features/profile/presentation/bloc/profile_event.dart';
 import 'package:artist_ums/features/songs/presentation/bloc/songs_bloc.dart';
 import 'package:artist_ums/features/songs/presentation/bloc/songs_event.dart';
 import 'package:artist_ums/features/users/presentation/bloc/user_bloc.dart';
@@ -29,6 +31,7 @@ class _DashboardPageState extends State<DashboardPage> {
     context.read<UserBloc>().add(UserEvent.getUsers());
     context.read<ArtistBloc>().add(ArtistEvent.loadArtists());
     context.read<SongBloc>().add(SongEvent.loadSongs());
+    context.read<ProfileBloc>().add(ProfileEvent.loadProfile());
 
     super.didChangeDependencies();
   }
@@ -41,6 +44,7 @@ class _DashboardPageState extends State<DashboardPage> {
         unauthenticated: () => context.go('/splash'),
       ),
       child: GenericScaffold(
+        enableDoubleTapExit: true,
         body: SingleChildScrollView(
           child: Column(
             children: [
