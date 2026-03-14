@@ -1,11 +1,9 @@
-import 'package:artist_ums/core/app_router/app_routes.dart';
 import 'package:artist_ums/core/constants/image_constants.dart';
 import 'package:artist_ums/core/presentation/widgets/generic_image.dart';
 import 'package:artist_ums/core/presentation/widgets/generic_scaffold.dart';
 import 'package:artist_ums/core/presentation/widgets/glow.dart';
 import 'package:artist_ums/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:artist_ums/features/auth/presentation/bloc/auth_event.dart';
-import 'package:artist_ums/features/auth/presentation/bloc/auth_state.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -24,11 +22,14 @@ class _SplashPageState extends State<SplashPage>
   @override
   void initState() {
     super.initState();
+
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 2),
     );
+
     _controller.forward();
+
     _controller.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         context.read<AuthBloc>().add(const AuthEvent.checkSession());
@@ -45,34 +46,24 @@ class _SplashPageState extends State<SplashPage>
   @override
   Widget build(BuildContext context) {
     return GenericScaffold(
-      body: BlocListener<AuthBloc, AuthState>(
-        listener: (context, state) {
-          state.whenOrNull(
-            authenticated: (user) => DashboardRoute().go(context),
-            unauthenticated: () => LoginRoute().go(context),
-            error: (failure) => LoginRoute().go(context),
-            resetRequired: () => LoginRoute().go(context),
-          );
-        },
-        child: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Glow(
-                child: GenericImage.lottieAsset(
-                  ImageConstants.cassetteLogoLottie,
-                  controller: _controller,
-                  width: 250.w,
-                  height: 250.h,
-                  onLoaded: (composition) {
-                    _controller.duration = composition.duration;
-                    _controller.forward();
-                  },
-                ),
+      body: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Glow(
+              child: GenericImage.lottieAsset(
+                ImageConstants.cassetteLogoLottie,
+                controller: _controller,
+                width: 250.w,
+                height: 250.h,
+                onLoaded: (composition) {
+                  _controller.duration = composition.duration;
+                  _controller.forward();
+                },
               ),
-              CupertinoActivityIndicator(),
-            ],
-          ),
+            ),
+            const CupertinoActivityIndicator(),
+          ],
         ),
       ),
     );

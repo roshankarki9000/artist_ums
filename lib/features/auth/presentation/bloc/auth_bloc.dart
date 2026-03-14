@@ -7,7 +7,7 @@ import 'package:injectable/injectable.dart';
 import 'auth_event.dart';
 import 'auth_state.dart';
 
-@injectable
+@lazySingleton
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AuthRepository repo;
   final UserRepository userRepo;
@@ -44,20 +44,27 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           return;
         }
 
-        final resetCheck = await userRepo.needsPasswordReset();
+        final userResult = await userRepo.getCurrentUser();
 
-        await resetCheck.fold(
-          (failure) async => emit(AuthState.error(failure: failure)),
-          (needsReset) async {
-            if (needsReset) {
-              emit(const AuthState.resetRequired());
-            } else {
-              final result = await userRepo.getCurrentUser();
-              result.fold(
-                (failure) => emit(AuthState.error(failure: failure)),
-                (user) => emit(AuthState.authenticated(user)),
-              );
-            }
+        await userResult.fold(
+          (failure) async {
+            emit(AuthState.error(failure: failure));
+          },
+          (user) async {
+            final resetCheck = await userRepo.needsPasswordReset();
+
+            await resetCheck.fold(
+              (failure) async {
+                emit(AuthState.error(failure: failure));
+              },
+              (needsReset) async {
+                if (needsReset) {
+                  emit(const AuthState.resetRequired());
+                } else {
+                  emit(AuthState.authenticated(user));
+                }
+              },
+            );
           },
         );
       },
@@ -137,7 +144,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(AuthState.error(failure: failure));
       },
       (_) {
-        const AuthState.unauthenticated();
+        emit(const AuthState.initial());
       },
     );
   }

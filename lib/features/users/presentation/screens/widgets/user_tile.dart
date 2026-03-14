@@ -6,6 +6,8 @@ import 'package:artist_ums/core/presentation/widgets/generic_dialog.dart';
 import 'package:artist_ums/core/presentation/widgets/generic_image.dart';
 import 'package:artist_ums/core/presentation/widgets/glow.dart';
 import 'package:artist_ums/core/utils/extensions/num_extension.dart';
+import 'package:artist_ums/features/profile/presentation/bloc/profile_bloc.dart';
+import 'package:artist_ums/features/profile/presentation/bloc/profile_state.dart';
 import 'package:artist_ums/features/users/domain/entities/user_model.dart';
 import 'package:artist_ums/features/users/presentation/bloc/user_bloc.dart';
 import 'package:artist_ums/features/users/presentation/bloc/user_event.dart';
@@ -61,22 +63,33 @@ class UserTile extends StatelessWidget {
           "Total Songs: ${user.songsCreated.twoDigits}",
         ),
 
-        trailing: PopupMenuButton(
-          onSelected: (value) {
-            if (value == 'edit') _edit(context);
-            if (value == 'delete') {
-              GenericDialog.show(
-                context,
-                title: 'Delete User',
-                subtitle: 'Are you sure you want to delete this user?',
-                onYes: () => _delete(context),
-              );
-            }
+        trailing: BlocBuilder<ProfileBloc, ProfileState>(
+          builder: (context, state) {
+            var userId = state.maybeWhen(
+              orElse: () => null,
+              loaded: (profile) => profile.id,
+            );
+            bool isEnabled = userId != null ? userId != user.id : false;
+            return PopupMenuButton(
+              onSelected: (value) {
+                if (value == 'edit') _edit(context);
+
+                if (value == 'delete') {
+                  GenericDialog.show(
+                    context,
+                    title: 'Delete User',
+                    subtitle: 'Are you sure you want to delete this user?',
+                    onYes: () => _delete(context),
+                  );
+                }
+              },
+              itemBuilder: (_) => [
+                PopupMenuItem(value: 'edit', child: Text("Edit")),
+                if (isEnabled)
+                  PopupMenuItem(value: 'delete', child: Text("Delete")),
+              ],
+            );
           },
-          itemBuilder: (_) => const [
-            PopupMenuItem(value: 'edit', child: Text("Edit")),
-            PopupMenuItem(value: 'delete', child: Text("Delete")),
-          ],
         ),
       ),
     );

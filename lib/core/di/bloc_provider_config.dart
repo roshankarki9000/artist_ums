@@ -22,7 +22,7 @@ class BlocProviderConfig extends StatelessWidget {
           create: (_) =>
               getIt<ConnectivityBloc>()..add(ConnectivityEvent.started()),
         ),
-        BlocProvider(create: (_) => getIt<AuthBloc>()),
+        BlocProvider.value(value: getIt<AuthBloc>()),
         BlocProvider(create: (_) => getIt<UserBloc>()),
         BlocProvider(create: (_) => getIt<ArtistBloc>()),
         BlocProvider(create: (_) => getIt<SongBloc>()),
