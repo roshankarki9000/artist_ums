@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:artist_ums/core/app_router/app_router.dart';
+import 'package:artist_ums/core/app_router/app_routes.dart';
 import 'package:artist_ums/core/constants/key_constants.dart';
 import 'package:artist_ums/core/constants/size_constants.dart';
 import 'package:artist_ums/core/constants/theme_constants.dart';
@@ -7,24 +10,33 @@ import 'package:artist_ums/core/di/get_it_config/get_it.dart';
 import 'package:artist_ums/core/presentation/widgets/connectivity/presentation/connectivity_widget.dart';
 import 'package:artist_ums/core/presentation/widgets/generic_app_background.dart';
 import 'package:artist_ums/core/service/deep_link_service.dart';
+import 'package:artist_ums/core/utils/extensions/log_extension.dart';
 import 'package:artist_ums/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+void main() {
+  runZonedGuarded(
+    () async {
+      WidgetsFlutterBinding.ensureInitialized();
 
-  await Supabase.initialize(
-    url: 'https://jrqakggremldblmjauqw.supabase.co',
-    anonKey:
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpycWFrZ2dyZW1sZGJsbWphdXF3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI1NDYwOTQsImV4cCI6MjA4ODEyMjA5NH0.OSpNrCXLUP6NEtX3AHJgfKobubF3wZd4CULxuB6R6KA',
+      await Supabase.initialize(
+        url: 'https://jrqakggremldblmjauqw.supabase.co',
+        anonKey:
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpycWFrZ2dyZW1sZGJsbWphdXF3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI1NDYwOTQsImV4cCI6MjA4ODEyMjA5NH0.OSpNrCXLUP6NEtX3AHJgfKobubF3wZd4CULxuB6R6KA',
+      );
+
+      await configureDependencies();
+
+      runApp(const MyApp());
+    },
+    (error, stack) {
+      error.logError(type: 'Zone Error');
+      stack.logError(type: 'Zone Stack');
+    },
   );
-
-  await configureDependencies();
-
-  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
@@ -50,8 +62,12 @@ class _MyAppState extends State<MyApp> {
     deepLinkService = getIt<DeepLinkService>();
 
     deepLinkService.init((uri) {
+      final link = uri.toString();
       if (uri.host == 'login') {
-        router.go('/login');
+        LoginRoute().go(context);
+      }
+      if (link.contains('auth-callback')) {
+        SplashRoute().go(context);
       }
     });
   }

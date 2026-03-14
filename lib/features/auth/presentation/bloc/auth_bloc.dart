@@ -139,14 +139,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Future<void> _googleLogin(Emitter<AuthState> emit) async {
     emit(const AuthState.loading());
     final result = await repo.loginWithGoogle();
-    result.fold(
-      (failure) {
-        emit(AuthState.error(failure: failure));
-      },
-      (_) {
-        emit(const AuthState.initial());
-      },
-    );
+    result.fold((failure) {
+      emit(AuthState.error(failure: failure));
+    }, (_) {});
   }
 
   Future<void> _logout(Emitter<AuthState> emit) async {
